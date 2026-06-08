@@ -1,0 +1,50 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Oxanium',sans-serif;background:#0a0a14;color:#e0e0f0;}
+:root{--y:#FFD700;--b:#00BFFF;--border:rgba(60,60,100,0.55);}
+.glass{background:rgba(12,12,26,.88);border:1px solid var(--border);border-radius:14px;padding:20px;backdrop-filter:blur(12px);max-width:680px;margin:0 auto;}
+.card-title{font-size:11px;color:var(--y);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;font-weight:600;}
+.bg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.bg-opt{border-radius:9px;border:2px solid var(--border);cursor:pointer;overflow:hidden;transition:all .15s;aspect-ratio:16/9;position:relative;background:#111;}
+.bg-opt:hover{border-color:#aaa;}
+.bg-opt.selected{border-color:var(--y);}
+.bg-opt img{width:100%;height:100%;object-fit:cover;display:block;}
+.bg-opt .bg-label{position:absolute;bottom:0;left:0;right:0;padding:4px 8px;font-size:11px;font-weight:600;background:rgba(0,0,0,.6);color:#e0e0f0;text-align:center;}
+.bg-opt .check{position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;background:var(--y);display:none;align-items:center;justify-content:center;font-size:12px;color:#000;font-weight:700;}
+.bg-opt.selected .check{display:flex;}
+.info{font-size:12px;color:#888;margin-top:10px;line-height:1.6;}
+code{font-family:'Share Tech Mono',monospace;background:rgba(255,215,0,.1);color:var(--y);padding:2px 6px;border-radius:4px;font-size:11px;}
+</style>
+
+<div class="glass">
+  <div class="card-title">Selector de fondo — así quedará en tu página</div>
+  <div class="bg-grid">
+    <div class="bg-opt selected" onclick="selectBg(0,this)">
+      <div style="width:100%;height:100%;background:linear-gradient(135deg,#0a0a14 0%,#1a1a3a 100%);"></div>
+      <div class="bg-label">Oscuro (defecto)</div>
+      <div class="check">✓</div>
+    </div>
+    <div class="bg-opt" onclick="selectBg(1,this)">
+      <div style="width:100%;height:100%;background:linear-gradient(135deg,#0a1428 0%,#0d2240 50%,#0a0a14 100%);"></div>
+      <div class="bg-label">assets/fondos/fondo1.jpg</div>
+      <div class="check">✓</div>
+    </div>
+    <div class="bg-opt" onclick="selectBg(2,this)">
+      <div style="width:100%;height:100%;background:linear-gradient(135deg,#140a28 0%,#2d1040 100%);"></div>
+      <div class="bg-label">assets/fondos/fondo2.jpg</div>
+      <div class="check">✓</div>
+    </div>
+  </div>
+  <div class="info">
+    El usuario elige el fondo y se guarda localmente en su navegador. En la página real, las tarjetas son semitransparentes (<code>backdrop-filter: blur</code>) así que el fondo se ve a través de ellas.<br><br>
+    Para añadir tus fondos pon los archivos en <code>assets/fondos/</code> y actualiza los nombres en el array <code>BG_WALLPAPERS</code> dentro del HTML.
+  </div>
+</div>
+
+<script>
+function selectBg(i,el){
+  document.querySelectorAll('.bg-opt').forEach((e,j)=>e.classList.toggle('selected',j===i));
+}
+</script>
