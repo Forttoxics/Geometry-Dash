@@ -23,9 +23,9 @@ const BG_WALLPAPERS = [
 ];
 
 const GAME_BG_OPTIONS = [
-  { name: 'Fondo 1', file: 'assets/imagenes/fondos/fondo1.jpg' },
-  { name: 'Fondo 2', file: 'assets/imagenes/fondos/fondo2.jpg' },
-  { name: 'Fondo 3', file: 'assets/imagenes/fondos/fondo3.jpg' },
+  { name: 'Fondo 1', file: 'assets/imagenes/fondos/fondo1game.jpg' },
+  { name: 'Fondo 2', file: 'assets/imagenes/fondos/fondo2game.jpg' },
+  { name: 'Fondo 3', file: 'assets/imagenes/fondos/fondo3game.jpg' },
 ];
 
 async function sha256(msg) {
