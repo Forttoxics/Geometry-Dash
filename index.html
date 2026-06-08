@@ -833,7 +833,7 @@ function initGame(){
     if(cube.y>=gnd){cube.y=gnd;cube.vy=0;cube.onGround=true;}else{cube.onGround=false;cube.angle+=0.08;}
     if(frame%Math.max(50,90-Math.floor(score/80))===0){
       const types=['spike','block'];const t=types[Math.floor(Math.random()*2)];
-      if(t==='spike') obstacles.push({x:W+10,y:H-20,w:18,h:20,type:'spike'});
+      if(t==='spike') obstacles.push({x:W+10,y:H-12,w:18,h:20,type:'spike'});
       else{const bh=28+Math.floor(Math.random()*20);obstacles.push({x:W+10,y:H-bh,w:28,h:bh,type:'block'});}
     }
     obstacles.forEach(o=>o.x-=speed);obstacles=obstacles.filter(o=>o.x>-50);
