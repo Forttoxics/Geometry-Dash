@@ -1,16 +1,16 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Share+Tech+Mono&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Oxanium',sans-serif;background:#0a0a14 url('assets/fondo') center/cover no-repeat fixed;color:#e0e0f0;min-height:100vh;}
+html,body{font-family:'Oxanium',sans-serif;background:#0a0a14 url('assets/fondo') center/cover no-repeat fixed;color:#e0e0f0;min-height:100vh;overflow-x:hidden;}
 :root{--y:#FFD700;--b:#00BFFF;--g:#39FF14;--r:#FF3A3A;--p:#9B59B6;--bg:#0a0a14;--card:rgba(12,12,26,0.82);--card2:rgba(18,18,36,0.88);--border:rgba(60,60,100,0.55);}
 .screen{display:none;padding:20px;max-width:700px;margin:0 auto;}
 .screen.active{display:block;}
 .glass{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;backdrop-filter:blur(12px);}
 .glass2{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;backdrop-filter:blur(8px);}
 .header{text-align:center;padding:28px 0 18px;}
-.header h1{font-size:28px;font-weight:700;color:var(--y);letter-spacing:3px;text-transform:uppercase;}
-.header .subtitle{font-size:13px;color:#aaa;margin-top:8px;line-height:1.6;max-width:480px;margin-left:auto;margin-right:auto;}
-.btn{display:inline-block;padding:9px 20px;border-radius:7px;font-family:'Oxanium',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid transparent;transition:all .15s;letter-spacing:0.5px;}
+.header h1{font-size:clamp(24px,6vw,28px);font-weight:700;color:var(--y);letter-spacing:3px;text-transform:uppercase;}
+.header .subtitle{font-size:clamp(12px,3vw,13px);color:#aaa;margin-top:8px;line-height:1.6;max-width:480px;margin-left:auto;margin-right:auto;}
+.btn{display:inline-block;padding:9px 20px;border-radius:7px;font-family:'Oxanium',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid transparent;transition:all .15s;letter-spacing:1px;}
 .btn-y{background:var(--y);color:#000;border-color:var(--y);}
 .btn-y:hover{background:#ffe94d;}
 .btn-b{background:transparent;color:var(--b);border-color:var(--b);}
@@ -34,7 +34,7 @@ input:focus{border-color:var(--y)!important;}
 input.err{border-color:var(--r)!important;}
 .divider{height:1px;background:var(--border);margin:18px 0;}
 .flex{display:flex;gap:10px;}
-.flex-b{display:flex;justify-content:space-between;align-items:center;}
+.flex-b{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
 .mt8{margin-top:8px;}
 .mt16{margin-top:16px;}
 .tc{text-align:center;}
@@ -47,46 +47,40 @@ input.err{border-color:var(--r)!important;}
 .pill-b{background:rgba(0,191,255,.1);color:var(--b);border:1px solid rgba(0,191,255,.25);}
 .pill-y{background:rgba(255,215,0,.1);color:var(--y);border:1px solid rgba(255,215,0,.25);}
 .pill-r{background:rgba(255,58,58,.1);color:var(--r);border:1px solid rgba(255,58,58,.3);}
-
-.streamer-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border:1px solid var(--border);border-radius:9px;margin-bottom:9px;cursor:pointer;transition:all .15s;background:var(--card);}
+.streamer-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border:1px solid var(--border);border-radius:9px;margin-bottom:9px;cursor:pointer;transition:all .15s;background:var(--card2);}
 .streamer-item:hover{border-color:var(--y);background:rgba(255,215,0,.04);}
 .s-avatar{width:42px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;flex-shrink:0;overflow:hidden;}
 .s-avatar img{width:100%;height:100%;object-fit:cover;}
 .s-badge{margin-left:auto;font-size:11px;padding:3px 8px;border-radius:4px;background:rgba(57,255,20,.12);color:var(--g);border:1px solid rgba(57,255,20,.3);}
-
-.queue-row{display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid var(--border);border-radius:8px;margin-bottom:7px;background:var(--card2);transition:border-color .15s;cursor:pointer;}
+.queue-row{display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid var(--border);border-radius:8px;margin-bottom:7px;background:var(--card2);transition:border-color .15s;cursor:pointer;flex-wrap:wrap;}
 .queue-row:hover{border-color:var(--b);}
-.q-num{width:26px;height:26px;border-radius:6px;background:rgba(0,191,255,.1);border:1px solid var(--b);color:var(--b);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.q-num{width:26px;height:26px;border-radius:6px;background:rgba(0,191,255,.1);border:1px solid var(--b);color:var(--b);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;}
 .q-id{font-family:'Share Tech Mono',monospace;font-size:14px;font-weight:600;color:var(--y);}
 .q-user{font-size:12px;color:#888;}
-.rate-btn{margin-left:auto;width:28px;height:28px;border-radius:6px;background:rgba(255,215,0,.07);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .15s;}
+.rate-btn{margin-left:auto;width:28px;height:28px;border-radius:6px;background:rgba(255,215,0,.07);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;font-weight:600;color:var(--y);transition:all .15s;flex-shrink:0;}
 .rate-btn.rated{background:rgba(57,255,20,.12);border-color:var(--g);}
-.ban-btn{width:28px;height:28px;border-radius:6px;background:rgba(255,58,58,.07);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .15s;}
+.ban-btn{width:28px;height:28px;border-radius:6px;background:rgba(255,58,58,.07);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;font-weight:600;flex-shrink:0;transition:all .15s;}
 .ban-btn:hover{border-color:var(--r);background:rgba(255,58,58,.15);}
-
-.modal-overlay{display:none;min-height:500px;background:rgba(0,0,0,.75);align-items:center;justify-content:center;}
+.modal-overlay{display:none;min-height:500px;background:rgba(0,0,0,.75);align-items:center;justify-content:center;position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;}
 .modal-overlay.open{display:flex;}
 .modal{background:rgba(14,14,28,.96);border:1px solid var(--border);border-radius:16px;padding:24px;max-width:420px;width:92%;max-height:85vh;overflow-y:auto;backdrop-filter:blur(16px);}
 .modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:12px;}
 .modal-title{font-size:15px;font-weight:700;color:var(--y);letter-spacing:1px;}
 .modal-close{cursor:pointer;background:none;border:none;color:#888;font-size:20px;font-family:inherit;}
 .modal-close:hover{color:#fff;}
-.info-row{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);gap:12px;}
+.info-row{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);gap:12px;flex-wrap:wrap;}
 .info-lbl{font-size:11px;color:#888;letter-spacing:1px;text-transform:uppercase;flex-shrink:0;}
 .info-val{font-size:13px;color:#e0e0f0;text-align:right;word-break:break-all;font-family:'Share Tech Mono',monospace;}
-
-.tab-bar{display:flex;gap:6px;margin-bottom:18px;background:var(--card2);padding:5px;border-radius:8px;border:1px solid var(--border);}
-.tab{flex:1;padding:7px;text-align:center;border-radius:6px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .15s;color:#888;border:none;background:none;}
+.tab-bar{display:flex;gap:6px;margin-bottom:18px;background:var(--card2);padding:5px;border-radius:8px;border:1px solid var(--border);flex-wrap:wrap;}
+.tab{flex:1;padding:7px;text-align:center;border-radius:6px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .15s;color:#888;border:none;background:transparent;min-width:80px;font-family:inherit;}
 .tab.active{background:var(--y);color:#000;}
-
 .demon-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--border);border-radius:9px;margin-bottom:8px;background:var(--card2);}
 .demon-num{font-size:22px;font-weight:700;color:var(--y);font-family:'Share Tech Mono',monospace;min-width:32px;}
 .demon-info{flex:1;min-width:0;}
 .demon-name{font-size:14px;font-weight:600;color:#e0e0f0;}
 .demon-creator{font-size:11px;color:#888;margin-top:2px;}
-
 .audio-player{background:rgba(8,8,20,.6);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:8px;}
-.audio-row{display:flex;align-items:center;gap:10px;}
+.audio-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .track-num{font-size:18px;font-weight:700;color:var(--p);font-family:'Share Tech Mono',monospace;min-width:28px;}
 .track-info{flex:1;min-width:0;}
 .track-name{font-size:13px;font-weight:600;color:#e0e0f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -97,19 +91,35 @@ input.err{border-color:var(--r)!important;}
 .progress-bar{width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:2px;cursor:pointer;position:relative;}
 .progress-fill{height:4px;background:var(--y);border-radius:2px;transition:width .1s linear;min-width:0;}
 .time-row{display:flex;justify-content:space-between;font-size:10px;color:#888;margin-top:3px;font-family:'Share Tech Mono',monospace;}
-
 #game-canvas{display:block;width:100%;height:120px;background:#080810;border:1px solid var(--border);border-radius:8px;cursor:pointer;}
-.cube-selector{display:flex;gap:8px;margin-bottom:10px;}
+.cube-selector{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
 .cube-opt{padding:6px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--card2);color:#aaa;transition:all .15s;font-family:'Oxanium',sans-serif;}
 .cube-opt.selected{border-color:var(--y);color:var(--y);background:rgba(255,215,0,.08);}
-
 .icon-picker{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
 .icon-opt{width:52px;height:52px;border-radius:9px;border:2px solid var(--border);cursor:pointer;overflow:hidden;transition:all .15s;background:rgba(8,8,20,.8);display:flex;align-items:center;justify-content:center;}
 .icon-opt:hover{border-color:#aaa;}
 .icon-opt.selected{border-color:var(--y);}
 .icon-opt img{width:38px;height:38px;object-fit:contain;}
-
-.banned-row{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:7px;background:rgba(255,58,58,.06);border:1px solid rgba(255,58,58,.2);margin-bottom:6px;}
+.banned-row{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:7px;background:rgba(255,58,58,.06);border:1px solid rgba(255,58,58,.2);margin-bottom:6px;flex-wrap:wrap;}
+.bg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px;}
+.bg-opt{border-radius:9px;border:2px solid var(--border);cursor:pointer;overflow:hidden;transition:all .15s;aspect-ratio:16/9;position:relative;background:#111;}
+.bg-opt:hover{border-color:#aaa;}
+.bg-opt.selected{border-color:var(--y);}
+.bg-opt img{width:100%;height:100%;object-fit:cover;display:block;}
+.bg-opt .bg-label{position:absolute;bottom:0;left:0;right:0;padding:4px 8px;font-size:10px;font-weight:600;background:rgba(0,0,0,.6);color:#e0e0f0;text-align:center;}
+.bg-opt .check{position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;background:var(--y);display:none;align-items:center;justify-content:center;font-size:12px;color:#000;font-weight:700;}
+.bg-opt.selected .check{display:flex;}
+@media(max-width:600px){
+  .screen{padding:15px;}
+  .glass{padding:15px;margin-bottom:12px;}
+  .header{padding:20px 0 14px;}
+  .icon-picker{gap:8px;}
+  .icon-opt{width:46px;height:46px;}
+  .queue-row{gap:8px;}
+  .flex-b{flex-direction:column;align-items:flex-start;gap:12px;}
+  .streamer-item{flex-wrap:wrap;}
+  .s-badge{margin-left:0;width:100%;}
+}
 </style>
 
 <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Portal de Level Request para Geometry Dash — selecciona tu streamer para enviar tu nivel</h2>
@@ -148,13 +158,13 @@ input.err{border-color:var(--r)!important;}
     <h1 id="mode-st-name">Streamer</h1>
     <p class="subtitle">¿Cómo quieres entrar?</p>
   </div>
-  <div style="display:flex;gap:14px;margin-top:6px;">
-    <div class="glass" style="flex:1;text-align:center;cursor:pointer;" onclick="enterUserMode()">
+  <div style="display:flex;gap:14px;margin-top:6px;flex-wrap:wrap;">
+    <div class="glass" style="flex:1;text-align:center;cursor:pointer;min-width:150px;" onclick="enterUserMode()">
       <div style="font-size:30px;margin-bottom:8px;">🎮</div>
       <div style="font-size:14px;font-weight:700;color:var(--y);">Usuario</div>
       <div style="font-size:12px;color:#888;margin-top:4px;">Enviar tu nivel</div>
     </div>
-    <div class="glass" style="flex:1;text-align:center;cursor:pointer;" onclick="showStreamerLogin()">
+    <div class="glass" style="flex:1;text-align:center;cursor:pointer;min-width:150px;" onclick="showStreamerLogin()">
       <div style="font-size:30px;margin-bottom:8px;">📺</div>
       <div style="font-size:14px;font-weight:700;color:var(--b);">Streamer</div>
       <div style="font-size:12px;color:#888;margin-top:4px;">Ver la cola</div>
@@ -164,6 +174,11 @@ input.err{border-color:var(--r)!important;}
 
 <div id="screen-user" class="screen">
   <button class="back-btn" onclick="goTo('screen-mode')">← Volver</button>
+  <div class="glass">
+    <div class="card-title">🎨 Cambiar fondo</div>
+    <div class="bg-grid" id="bg-selector"></div>
+    <div style="font-size:12px;color:#888;line-height:1.6;">El fondo se guardará en tu navegador automáticamente.</div>
+  </div>
   <div class="glass">
     <div class="card-title">👤 Tu ícono</div>
     <div style="font-size:12px;color:#888;margin-bottom:8px;">Elige tu ícono de perfil:</div>
@@ -233,12 +248,12 @@ input.err{border-color:var(--r)!important;}
 </div>
 
 <div id="screen-streamer" class="screen">
-  <div class="flex-b" style="margin-bottom:18px;">
+  <div class="flex-b" style="margin-bottom:18px;width:100%;">
     <div>
       <div style="font-size:20px;font-weight:700;color:var(--b);" id="panel-name">Streamer</div>
       <div style="font-size:12px;color:#888;">Panel del streamer</div>
     </div>
-    <div class="flex" style="align-items:center;gap:8px;">
+    <div class="flex" style="align-items:center;gap:8px;flex-wrap:wrap;">
       <a href="https://discord.com/users/yandelft18" target="_blank" class="btn btn-disc">💬 Contactar dev</a>
       <button class="btn btn-r btn-sm" onclick="resetQueue()">⟳ Reset cola</button>
       <button class="back-btn" style="margin-bottom:0;" onclick="goTo('screen-mode')">← Salir</button>
@@ -258,8 +273,8 @@ input.err{border-color:var(--r)!important;}
     <div class="card-title">Streamers (máx. 10)</div>
     <div id="dev-st-list"></div>
     <div class="divider"></div>
-    <div style="display:flex;gap:8px;">
-      <input type="text" id="new-st" placeholder="Nombre del streamer" style="flex:1;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <input type="text" id="new-st" placeholder="Nombre del streamer" style="flex:1;min-width:150px;">
       <input type="password" id="new-st-pass" placeholder="Contraseña" style="width:140px;">
       <button class="btn btn-y btn-sm" onclick="addStreamer()">Añadir</button>
     </div>
@@ -269,8 +284,8 @@ input.err{border-color:var(--r)!important;}
     <div class="card-title">Usuarios baneados</div>
     <div id="banned-list"></div>
     <div class="divider"></div>
-    <div style="display:flex;gap:8px;">
-      <input type="text" id="ban-input" placeholder="Usuario GD a banear" style="flex:1;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <input type="text" id="ban-input" placeholder="Usuario GD a banear" style="flex:1;min-width:150px;">
       <button class="btn btn-r btn-sm" onclick="banUser()">Banear</button>
     </div>
   </div>
@@ -313,10 +328,15 @@ input.err{border-color:var(--r)!important;}
 
 <script>
 let streamers=[], queue={}, sentLevels={}, banned=[], demons=[], songs=[];
-let currentStreamer=null, loginTarget=null, bestScore=0, currentIcon=0, cubeSkin=0;
+let currentStreamer=null, loginTarget=null, bestScore=0, currentIcon=0, cubeSkin=0, currentBg=0;
 let activeAudio=null, activeTrackEl=null;
 
 const DEV_HASH='c775e7b757ede630cd0aa1113bd102661ab38829602579a0d1a3014074a70d6';
+const BG_WALLPAPERS=[
+  {name:'Oscuro (defecto)',gradient:'linear-gradient(135deg,#0a0a14 0%,#1a1a3a 100%)'},
+  {name:'Azul noche',gradient:'linear-gradient(135deg,#0a1428 0%,#0d2240 50%,#0a0a14 100%)'},
+  {name:'Púrpura místico',gradient:'linear-gradient(135deg,#140a28 0%,#2d1040 100%)'},
+];
 
 async function sha256(msg){
   const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(msg));
@@ -330,6 +350,7 @@ async function save(){
     await window.storage.set('gd2_banned',JSON.stringify(banned));
     await window.storage.set('gd2_demons',JSON.stringify(demons));
     await window.storage.set('gd2_songs',JSON.stringify(songs));
+    await window.storage.set('gd2_currentBg',currentBg.toString());
   }catch(e){}
 }
 
@@ -345,6 +366,8 @@ async function load(){
     if(d) demons=JSON.parse(d.value);
     const sg=await window.storage.get('gd2_songs');
     if(sg) songs=JSON.parse(sg.value);
+    const bg=await window.storage.get('gd2_currentBg');
+    if(bg) {currentBg=parseInt(bg.value);applyBg(currentBg);}
   }catch(e){}
 
   if(!streamers.length){
@@ -372,6 +395,40 @@ async function load(){
   renderStreamerList();
   renderDemonList();
   renderSongsList();
+  renderBgSelector();
+}
+
+function applyBg(idx){
+  if(idx>=0 && idx<BG_WALLPAPERS.length){
+    const bg=BG_WALLPAPERS[idx];
+    document.body.style.backgroundImage=`url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><defs><linearGradient id=%22g%22 x1=%220%25%22 y1=%220%25%22 x2=%22100%25%22 y2=%22100%25%22><stop offset=%220%25%22 style=%22stop-color:${encodeURIComponent(bg.gradient.match(/#[0-9a-f]{6}/gi)[0])};stop-opacity:1%22 /><stop offset=%22100%25%22 style=%22stop-color:${encodeURIComponent(bg.gradient.match(/#[0-9a-f]{6}/gi)[bg.gradient.match(/#[0-9a-f]{6}/gi).length-1])};stop-opacity:1%22 /></linearGradient></defs><rect width=%22100%22 height=%22100%22 fill=%22url(%23g)%22/></svg>')`;
+    document.body.style.backgroundSize='cover';
+    document.body.style.backgroundAttachment='fixed';
+    document.body.style.backgroundPosition='center';
+    currentBg=idx;
+    save();
+  }
+}
+
+function renderBgSelector(){
+  const el=document.getElementById('bg-selector');
+  if(!el) return;
+  el.innerHTML='';
+  BG_WALLPAPERS.forEach((bg,i)=>{
+    const div=document.createElement('div');
+    div.className='bg-opt'+(i===currentBg?' selected':'');
+    div.onclick=()=>selectBg(i);
+    div.innerHTML=`
+      <div style="width:100%;height:100%;background:${bg.gradient};"></div>
+      <div class="bg-label">${bg.name}</div>
+      <div class="check">✓</div>`;
+    el.appendChild(div);
+  });
+}
+
+function selectBg(i){
+  document.querySelectorAll('.bg-opt').forEach((e,j)=>e.classList.toggle('selected',j===i));
+  applyBg(i);
 }
 
 function goTo(id){
@@ -467,7 +524,7 @@ async function submitLevel(){
   if(!sentLevels[sid]) sentLevels[sid]={};
   if(sentLevels[sid][lid]){document.getElementById('user-alert').innerHTML='<div class="alert alert-r">Ya enviaste esta ID, espera a que revisen tu nivel según el orden 🕐</div>';return;}
   if(!queue[sid]) queue[sid]=[];
-  queue[sid].push({levelId:lid,gdUser:gd,social:soc,levelName:ln,video:vid,note,rated:false,icon:currentIcon,ts:Date.now()});
+  queue[sid].push({levelId:lid,gdUser:gd,social:soc,levelName:ln,video:vid,note,rated:false,icon:currentIcon,ts:Date.now(),userId:'user_'+Date.now()});
   sentLevels[sid][lid]=true;
   await save();
   document.getElementById('user-alert').innerHTML='<div class="alert alert-g">✓ ¡Nivel enviado! Estás en la cola 🎮</div>';
@@ -530,7 +587,7 @@ function openLevelModal(idx){
   let html=`<div class="modal-hdr"><div class="modal-title">Nivel #${entry.levelId}</div><button class="modal-close" onclick="closeModal()">✕</button></div>
   <div style="margin-bottom:12px;font-size:12px;color:#888;">Datos completados: <span style="color:var(--g);font-weight:700;">${filled}</span>/6 ${dots}</div>`;
   fields.forEach(([l,v])=>{html+=`<div class="info-row"><span class="info-lbl">${l}</span><span class="info-val">${v}</span></div>`;});
-  html+=`<div style="display:flex;gap:8px;margin-top:16px;"><button class="btn btn-r btn-sm" onclick="removeEntry(${idx})" style="flex:1;">Eliminar de la cola</button><button class="btn btn-ghost btn-sm" onclick="closeModal()">Cerrar</button></div>`;
+  html+=`<div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;"><button class="btn btn-r btn-sm" onclick="removeEntry(${idx})" style="flex:1;">Eliminar de la cola</button><button class="btn btn-ghost btn-sm" onclick="closeModal()" style="flex:1;">Cerrar</button></div>`;
   document.getElementById('modal-content').innerHTML=html;
   document.getElementById('modal-overlay').classList.add('open');
 }
@@ -556,8 +613,8 @@ function renderDevPanel(){
   streamers.forEach((st,i)=>{
     const d=document.createElement('div');
     d.className='flex-b';d.style.marginBottom='10px';
-    d.innerHTML=`<div><span style="color:var(--y);font-weight:700;">${st.name}</span> <span style="color:#888;font-size:12px;">· avatar: <input type="text" placeholder="assets/imagenes/perfil/..." value="${st.avatar}" style="width:160px;padding:4px;border-radius:4px;background:rgba(8,8,20,.7);border:1px solid var(--border);color:#e0e0f0;" onchange="updateAvatar(${i},this.value)"></span></div>
-    <div style="display:flex;gap:6px;"><button class="btn btn-ghost btn-sm" onclick="resetStQ('${st.id}')">Reset cola</button><button class="btn btn-r btn-sm" onclick="removeStreamer(${i})">Eliminar</button></div>`;
+    d.innerHTML=`<div><span style="color:var(--y);font-weight:700;">${st.name}</span> <span style="color:#888;font-size:12px;">· avatar: <input type="text" placeholder="assets/imagenes/perfil/..." value="${st.avatar||''}" style="width:200px;max-width:100%;" onchange="streamers[${i}].avatar=this.value;save();renderStreamerList();"></span></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;"><button class="btn btn-ghost btn-sm" onclick="resetStQ('${st.id}')">Reset cola</button><button class="btn btn-r btn-sm" onclick="removeStreamer(${i})">Eliminar</button></div>`;
     el.appendChild(d);
   });
 
@@ -613,11 +670,11 @@ function unban(i){banned.splice(i,1);save();renderDevPanel();}
 function renderDemonEditor(){
   const el=document.getElementById('demon-editor');el.innerHTML='';
   demons.forEach((d,i)=>{
-    const row=document.createElement('div');row.style.cssText='display:flex;gap:6px;margin-bottom:6px;align-items:center;';
+    const row=document.createElement('div');row.style.cssText='display:flex;gap:6px;margin-bottom:6px;align-items:center;flex-wrap:wrap;';
     row.innerHTML=`<span style="color:var(--y);font-family:Share Tech Mono,monospace;font-size:14px;min-width:20px;">${i+1}</span>
-    <input type="text" placeholder="Nombre" value="${d.name}" style="flex:1;" onchange="demons[${i}].name=this.value;save();renderDemonList();">
-    <input type="text" placeholder="Creador" value="${d.creator}" style="flex:1;" onchange="demons[${i}].creator=this.value;save();renderDemonList();">
-    <input type="text" placeholder="assets/demons/archivo.mp3" value="${d.file}" style="flex:1.5;" onchange="demons[${i}].file=this.value;save();renderDemonList();">`;
+    <input type="text" placeholder="Nombre" value="${d.name}" style="flex:1;min-width:150px;" onchange="demons[${i}].name=this.value;save();renderDemonList();">
+    <input type="text" placeholder="Creador" value="${d.creator}" style="flex:1;min-width:100px;" onchange="demons[${i}].creator=this.value;save();renderDemonList();">
+    <input type="text" placeholder="assets/demons/archivo.mp3" value="${d.file}" style="flex:1.5;min-width:150px;" onchange="demons[${i}].file=this.value;save();renderDemonList();">`;
     el.appendChild(row);
   });
 }
@@ -625,10 +682,10 @@ function renderDemonEditor(){
 function renderSongsEditor(){
   const el=document.getElementById('songs-editor');el.innerHTML='';
   songs.forEach((s,i)=>{
-    const row=document.createElement('div');row.style.cssText='display:flex;gap:6px;margin-bottom:6px;align-items:center;';
+    const row=document.createElement('div');row.style.cssText='display:flex;gap:6px;margin-bottom:6px;align-items:center;flex-wrap:wrap;';
     row.innerHTML=`<span style="color:var(--p);font-family:Share Tech Mono,monospace;font-size:14px;min-width:20px;">${i+1}</span>
-    <input type="text" placeholder="Nombre" value="${s.name}" style="flex:1;" onchange="songs[${i}].name=this.value;save();renderSongsList();">
-    <input type="text" placeholder="assets/songs/archivo.mp3" value="${s.file}" style="flex:1.5;" onchange="songs[${i}].file=this.value;save();renderSongsList();">
+    <input type="text" placeholder="Nombre" value="${s.name}" style="flex:1;min-width:150px;" onchange="songs[${i}].name=this.value;save();renderSongsList();">
+    <input type="text" placeholder="assets/songs/archivo.mp3" value="${s.file}" style="flex:1.5;min-width:150px;" onchange="songs[${i}].file=this.value;save();renderSongsList();">
     <button class="btn btn-ghost btn-sm" onclick="removeSong(${i})">✕</button>`;
     el.appendChild(row);
   });
@@ -746,7 +803,7 @@ function initGame(){
 
   function reset(){cube={x:60,y:H-40,vy:0,size:28,angle:0,onGround:true};obstacles=[];particles=[];score=0;frame=0;speed=3;alive=true;started=false;if(animId)cancelAnimationFrame(animId);loop();}
 
-  function jump(){if(!alive){reset();return;}if(!started)started=true;if(cube.onGround){cube.vy=-9;cube.onGround=false;for(let i=0;i<5;i++)particles.push({x:cube.x,y:cube.y+cube.size,vx:(Math.random()-.5)*4,vy:-Math.random()*3,life:15});}}
+  function jump(){if(!alive){reset();return;}if(!started)started=true;if(cube.onGround){cube.vy=-9;cube.onGround=false;for(let i=0;i<5;i++)particles.push({x:cube.x,y:cube.y+cube.size,vx:(Math.random()-.5)*4,vy:Math.random()*2+1,life:15,color:'rgba(255,215,0,0.6)'});}}
 
   canvas.onclick=jump;
   const keyHandler=e=>{if(e.code==='Space'){e.preventDefault();jump();}};
