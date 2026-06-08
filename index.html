@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GD Level Request</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Portal de Level Request para Geometry Dash — selecciona tu streamer para enviar tu nivel</h2>
+
+<div id="screen-select" class="screen active">
+  <div class="header">
+    <h1>⬛ GD Level Request</h1>
+    <p class="subtitle">Esta página está hecha con la intención de poder facilitar algunas acciones dentro de la comunidad de Geometry Dash.</p>
+  </div>
+  <div id="streamer-list"></div>
+  <div class="divider"></div>
+  <div class="tc" style="margin-bottom:6px;">
+    <button class="btn btn-ghost btn-sm" onclick="showDevLogin()">🔧 Dev / Modo admin</button>
+  </div>
+  <div class="divider"></div>
+  <div class="glass">
+    <div class="card-title">🔥 Top 5 — Demon List</div>
+    <div id="demon-list-ui"></div>
+  </div>
+  <div class="glass" style="margin-top:4px;">
+    <div class="card-title">🎵 Canciones míticas de GD</div>
+    <div id="songs-ui"></div>
+  </div>
+</div>
+
+<div id="screen-mode" class="screen">
+  <button class="back-btn" onclick="goTo('screen-select')">← Volver</button>
+  <div class="header">
+    <h1 id="mode-st-name">Streamer</h1>
+    <p class="subtitle">¿Cómo quieres entrar?</p>
+  </div>
+  <div style="display:flex;gap:14px;margin-top:6px;flex-wrap:wrap;">
+    <div class="glass" style="flex:1;text-align:center;cursor:pointer;min-width:150px;" onclick="enterUserMode()">
+      <div style="font-size:32px;margin-bottom:8px;">🎮</div>
+      <div style="font-size:15px;font-weight:700;color:var(--y);">Usuario</div>
+      <div style="font-size:13px;color:#888;margin-top:4px;">Enviar tu nivel</div>
+    </div>
+    <div class="glass" style="flex:1;text-align:center;cursor:pointer;min-width:150px;" onclick="showStreamerLogin()">
+      <div style="font-size:32px;margin-bottom:8px;">📺</div>
+      <div style="font-size:15px;font-weight:700;color:var(--b);">Streamer</div>
+      <div style="font-size:13px;color:#888;margin-top:4px;">Ver la cola</div>
+    </div>
+  </div>
+</div>
+
+<div id="screen-user" class="screen">
+  <button class="back-btn" onclick="goTo('screen-mode')">← Volver</button>
+  <div class="glass">
+    <div class="card-title">🎨 Cambiar fondo</div>
+    <div class="bg-grid" id="bg-selector"></div>
+    <div style="font-size:13px;color:#888;line-height:1.6;">El fondo se guardará en tu navegador automáticamente.</div>
+  </div>
+  <div class="glass">
+    <div class="card-title">👤 Tu ícono</div>
+    <div style="font-size:13px;color:#888;margin-bottom:8px;">Elige tu ícono de perfil:</div>
+    <div class="icon-picker" id="icon-picker">
+      <div class="icon-opt selected" data-icon="0" onclick="selectIcon(0)">
+        <svg width="38" height="38" viewBox="0 0 38 38"><rect x="4" y="4" width="30" height="30" rx="4" fill="#FFD700"/></svg>
+      </div>
+      <div class="icon-opt" data-icon="1" onclick="selectIcon(1)">
+        <svg width="38" height="38" viewBox="0 0 38 38"><rect x="4" y="4" width="30" height="30" rx="4" fill="#00BFFF"/></svg>
+      </div>
+      <div class="icon-opt" data-icon="2" onclick="selectIcon(2)">
+        <svg width="38" height="38" viewBox="0 0 38 38"><rect x="4" y="4" width="30" height="30" rx="4" fill="#9B59B6"/></svg>
+      </div>
+      <div class="icon-opt" data-icon="3" onclick="selectIcon(3)">
+        <svg width="38" height="38" viewBox="0 0 38 38"><rect x="4" y="4" width="30" height="30" rx="4" fill="#39FF14"/></svg>
+      </div>
+    </div>
+  </div>
+  <div class="glass">
+    <div class="card-title">📤 Enviar nivel</div>
+    <div id="user-alert"></div>
+    <div class="sec-title">Obligatorio</div>
+    <div class="form-group">
+      <label class="form-label">ID del nivel<span class="req">*</span></label>
+      <input type="number" id="f-lid" placeholder="ej: 12345678">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Usuario en Geometry Dash<span class="req">*</span></label>
+      <input type="text" id="f-gd" placeholder="tu nombre en GD">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Usuario en Twitch / TikTok / YouTube<span class="req">*</span></label>
+      <input type="text" id="f-soc" placeholder="@usuario">
+    </div>
+    <div class="divider"></div>
+    <div class="sec-title">Opcional</div>
+    <div class="form-group">
+      <label class="form-label">Nombre del nivel</label>
+      <input type="text" id="f-ln" placeholder="ej: Stereo Madness 2">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Link de gameplay (nivel difícil / bug / largo)</label>
+      <input type="url" id="f-vid" placeholder="https://youtube.com/...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nota para el streamer</label>
+      <input type="text" id="f-note" placeholder="ej: tiene un bug en el 80%">
+    </div>
+    <div class="mt16 tc">
+      <button class="btn btn-y" onclick="submitLevel()" style="width:100%;">ENVIAR NIVEL ⬛</button>
+    </div>
+  </div>
+  <div class="glass">
+    <div class="card-title">🎮 Minijuego — elige tu cubo</div>
+    <div class="cube-selector">
+      <div class="cube-opt selected" onclick="setCubeSkin(0)">Clásico</div>
+      <div class="cube-opt" onclick="setCubeSkin(1)">Neón</div>
+      <div class="cube-opt" onclick="setCubeSkin(2)">Galaxia</div>
+    </div>
+    <div class="card-title" style="margin-top:12px;">🎨 Fondo del minijuego</div>
+    <div class="bg-selector-game" id="bg-game-selector"></div>
+    <canvas id="game-canvas" width="660" height="140"></canvas>
+    <div class="flex-b mt8" style="font-size:13px;color:#888;">
+      <span>Puntos: <span id="sc" style="color:var(--y);font-family:'Share Tech Mono',monospace;">0</span></span>
+      <span>Mejor: <span id="bsc" style="color:var(--g);font-family:'Share Tech Mono',monospace;">0</span></span>
+      <span style="font-size:12px;">Click o Espacio para saltar</span>
+    </div>
+  </div>
+</div>
+
+<div id="screen-streamer" class="screen">
+  <div class="flex-b" style="margin-bottom:18px;width:100%;">
+    <div>
+      <div style="font-size:22px;font-weight:700;color:var(--b);" id="panel-name">Streamer</div>
+      <div style="font-size:13px;color:#888;">Panel del streamer</div>
+    </div>
+    <div class="flex" style="align-items:center;gap:8px;flex-wrap:wrap;">
+      <a href="https://discord.com/users/yandelft18" target="_blank" class="btn btn-disc">💬 Contactar dev</a>
+      <button class="btn btn-r btn-sm" onclick="resetQueue()">⟳ Reset cola</button>
+      <button class="back-btn" style="margin-bottom:0;" onclick="goTo('screen-mode')">← Salir</button>
+    </div>
+  </div>
+  <div class="glass">
+    <div class="card-title">Cola de niveles <span id="q-count" class="pill pill-b">0</span></div>
+    <div id="queue-list"><div style="color:#888;font-size:14px;text-align:center;padding:20px;">La cola está vacía 👀</div></div>
+  </div>
+</div>
+
+<div id="screen-dev" class="screen">
+  <button class="back-btn" onclick="goTo('screen-select')">← Salir</button>
+  <div style="font-size:22px;font-weight:700;color:var(--y);margin-bottom:18px;">🔧 Panel dev</div>
+
+  <div class="glass">
+    <div class="card-title">Streamers (máx. 10)</div>
+    <div id="dev-st-list"></div>
+    <div class="divider"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <input type="text" id="new-st" placeholder="Nombre del streamer" style="flex:1;min-width:150px;">
+      <input type="password" id="new-st-pass" placeholder="Contraseña" style="width:140px;">
+      <button class="btn btn-y btn-sm" onclick="addStreamer()">Añadir</button>
+    </div>
+  </div>
+
+  <div class="glass">
+    <div class="card-title">Usuarios baneados</div>
+    <div id="banned-list"></div>
+    <div class="divider"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <input type="text" id="ban-input" placeholder="Usuario GD a banear" style="flex:1;min-width:150px;">
+      <button class="btn btn-r btn-sm" onclick="banUser()">Banear</button>
+    </div>
+  </div>
+
+  <div class="glass">
+    <div class="card-title">Top 5 Demon List — editar</div>
+    <div id="demon-editor"></div>
+  </div>
+
+  <div class="glass">
+    <div class="card-title">Canciones míticas — editar</div>
+    <div id="songs-editor"></div>
+  </div>
+
+  <div class="glass">
+    <div class="card-title">Colas activas</div>
+    <div id="dev-queues"></div>
+  </div>
+</div>
+
+<div id="modal-overlay" class="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-content"></div>
+</div>
+<div id="modal-login" class="modal-overlay" onclick="closeLoginModal(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-title" id="login-title">Acceso</div>
+      <button class="modal-close" onclick="closeLoginModal()">✕</button>
+    </div>
+    <div id="login-alert"></div>
+    <div class="form-group">
+      <label class="form-label">Contraseña</label>
+      <input type="password" id="login-pass" placeholder="Ingresa la contraseña" onkeydown="if(event.key==='Enter')checkLogin()">
+    </div>
+    <div class="flex" style="justify-content:flex-end;margin-top:12px;">
+      <button class="btn btn-b" onclick="checkLogin()">Entrar</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/game.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
