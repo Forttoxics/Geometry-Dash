@@ -1,51 +1,194 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GD Level Request</title>
 
-<link rel="stylesheet" href="css/style.css">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+GD Level Request
+</title>
+
+<link
+rel="stylesheet"
+href="css/style.css">
+
 </head>
+
 <body>
 
+
+<!-- HEADER -->
+
 <header class="header">
-    <h1>⬛ GD Level Request</h1>
-    <p>Selecciona streamer y envía tu nivel</p>
+
+<h1>
+⬛ GD Level Request
+</h1>
+
+<p>
+Selecciona streamer y envía tu nivel
+</p>
+
 </header>
 
-<section id="screen-select" class="screen active">
-    <div id="streamer-list" class="streamer-grid"></div>
 
-    <button class="btn" onclick="showDevLogin()">
-        🔧 Dev Mode
-    </button>
-</section>
 
-<section id="screen-user" class="screen">
-    <div class="card">
-        <h2>Enviar nivel</h2>
+<!-- PANTALLA INICIO -->
 
-        <input id="f-lid" placeholder="ID nivel">
-        <input id="f-gd" placeholder="Usuario GD">
-        <input id="f-soc" placeholder="@usuario">
+<section
+id="screen-select"
+class="screen active">
 
-        <button onclick="submitLevel()">Enviar</button>
-    </div>
+<div
+id="streamer-list"
+class="streamer-grid">
 
-    <div class="card">
-        <h2>Minijuego</h2>
-        <canvas id="game-canvas" width="700" height="140"></canvas>
-    </div>
-</section>
+<!-- streamers aparecen aquí -->
 
-<div id="login-modal" class="hidden">
-    <div class="card">
-        <input id="login-pass" type="password" placeholder="Contraseña">
-        <button onclick="checkLogin()">Entrar</button>
-    </div>
 </div>
 
+
+<div
+style="
+display:flex;
+justify-content:center;
+margin-top:20px;
+">
+
+<button onclick="showDevLogin()">
+
+🔧 Dev Mode
+
+</button>
+
+</div>
+
+</section>
+
+
+
+
+<!-- PANTALLA USER -->
+
+<section
+id="screen-user"
+class="screen">
+
+
+<div class="card">
+
+<h2>
+Enviar nivel
+</h2>
+
+<input
+id="f-lid"
+placeholder="ID nivel">
+
+<input
+id="f-gd"
+placeholder="Usuario GD">
+
+<input
+id="f-soc"
+placeholder="@usuario">
+
+<button
+onclick="submitLevel()">
+
+Enviar
+
+</button>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>
+Minijuego
+</h2>
+
+<canvas
+id="game-canvas"
+width="900"
+height="170">
+
+</canvas>
+
+<p
+style="
+margin-top:10px;
+opacity:.7;
+">
+
+Espacio o tocar pantalla para saltar
+
+</p>
+
+</div>
+
+</section>
+
+
+
+
+<!-- LOGIN DEV -->
+
+<div
+id="login-modal"
+class="hidden">
+
+<div class="card">
+
+<h2>
+Dev Login
+</h2>
+
+<input
+
+id="login-pass"
+
+type="password"
+
+placeholder="Contraseña">
+
+<button
+onclick="checkLogin()">
+
+Entrar
+
+</button>
+
+<br><br>
+
+<button
+onclick="
+document
+.getElementById('login-modal')
+.classList
+.add('hidden')
+">
+
+Cerrar
+
+</button>
+
+</div>
+
+</div>
+
+
+
 <script src="js/script.js"></script>
+
 </body>
+
 </html>
