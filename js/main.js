@@ -19,13 +19,13 @@ const DEV_HASH = '82cd59125fd51edf979666c4dafae56556498987a9866e2879d12b8d0e0aed
 const BG_WALLPAPERS = [
   { name: 'Fondo 1', file: 'assets/imagenes/fondos/fondo1.jpg' },
   { name: 'Fondo 2', file: 'assets/imagenes/fondos/fondo2.jpg' },
-  { name: 'Fondo 3', file: 'assets/imagenes/fondos/fondo3.jpg' },
+  { name: 'Clasico', file: 'assets/imagenes/fondos/fondo3.jpg' },
 ];
 
 const GAME_BG_OPTIONS = [
   { name: 'Fondo 1', file: 'assets/imagenes/fondos/fondo1game.jpg' },
   { name: 'Fondo 2', file: 'assets/imagenes/fondos/fondo2game.jpg' },
-  { name: 'Fondo 3', file: 'assets/imagenes/fondos/fondo3game.jpg' },
+  { name: 'Clasico', file: 'assets/imagenes/fondos/fondo3game.jpg' },
 ];
 
 async function sha256(msg) {
