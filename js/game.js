@@ -160,23 +160,35 @@ function initGame() {
       cube.angle += 0.08;
     }
 
-    obstacles.forEach((o) => {
-      if (o.type !== 'block') return;
-      const feet = cube.y + cube.size;
-      const prevFeet = feet - prevVy;
-      if (
-        cube.vy >= 0 &&
-        prevFeet <= o.y + 4 &&
-        feet >= o.y - 2 &&
-        cube.x + cube.size - 4 > o.x + 4 &&
-        cube.x + 4 < o.x + o.w - 4
-      ) {
-        cube.y = o.y - cube.size;
-        cube.vy = 0;
-        cube.onGround = true;
-      }
-    });
+  obstacles.forEach((o) => {
+  if (o.type !== 'block') return;
+  const feet = cube.y + cube.size;
+  const prevFeet = feet - cube.vy;
+  const head = cube.y;
+  const right = cube.x + cube.size;
+  const left = cube.x;
 
+  const overlapX = right - 4 > o.x + 4 && left + 4 < o.x + o.w - 4;
+  const overlapY = feet > o.y && head < o.y + o.h;
+
+  if (!overlapX || !overlapY) return;
+
+  //aterriza encima
+  if (cube.vy >= 0 && prevFeet <= o.y + 4) {
+    cube.y = o.y - cube.size;
+    cube.vy = 0;
+    cube.onGround = true;
+  }
+  //rebota
+  else if (cube.vy < 0 && head >= o.y + o.h - 4) {
+    cube.y = o.y + o.h;
+    cube.vy = 0;
+  }
+  //muere
+  else {
+    die();
+  }
+});
     if (frame % Math.max(50, 90 - Math.floor(score / 80)) === 0) {
       const types = ['spike', 'block'];
       const t = types[Math.floor(Math.random() * 2)];
