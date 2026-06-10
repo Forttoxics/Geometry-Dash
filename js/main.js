@@ -398,6 +398,16 @@ async function reloadQueue() {
   } catch (e) {
     console.warn('Error al recargar:', e);
   }
+  async function reloadQueue() {
+  try {
+    const q = await Storage.get('gd2_queue');
+    if (q) queue = JSON.parse(q.value);
+    renderStreamerPanel();
+  } catch (e) {
+    console.warn('Error al recargar:', e);
+  }
+}
+  
 }
 function resetQueue() {
   if (!confirm('¿Resetear toda la cola?')) return;
@@ -422,7 +432,16 @@ function renderDevPanel() {
     d.className = 'dev-st-row';
     d.innerHTML = `
       <div style="flex:1;min-width:0;">
-        <div><span style="color:var(--y);font-weight:700;">${st.name}</span> <span style="color:#888;font-size:12px;">ID: st${i + 1}</span></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+          <div class="s-avatar" style="background:${st.color};width:36px;height:36px;border-radius:7px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            ${st.avatar ? `<img src="${st.avatar}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:15px;font-weight:700;">${st.name[0].toUpperCase()}</span>`}
+          </div>
+          <span style="color:var(--y);font-weight:700;">${st.name}</span>
+        </div>
+        <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
+          <input type="text" id="avatar-${st.id}" placeholder="assets/imagenes/perfil/nombre.png" value="${st.avatar||''}" style="flex:1;min-width:180px;font-size:12px;">
+          <button class="btn btn-b btn-sm" onclick="changeAvatar('${st.id}')">Guardar avatar</button>
+        </div>
         <div class="dev-pass-row">
           <input type="password" id="pass-${st.id}" placeholder="Nueva contraseña">
           <button class="btn btn-b btn-sm" onclick="changeStreamerPass('${st.id}')">Cambiar pass</button>
@@ -476,7 +495,16 @@ async function changeStreamerPass(stId) {
   await save();
   alert(`Contraseña de "${st.name}" actualizada`);
 }
-
+async function changeAvatar(stId) {
+  const input = document.getElementById('avatar-' + stId);
+  const url = input.value.trim();
+  const st = streamers.find((s) => s.id === stId);
+  if (!st) return;
+  st.avatar = url;
+  await save();
+  renderStreamerList();
+  renderDevPanel();
+}
 async function addStreamer() {
   if (streamers.length >= 10) {
     alert('Máximo 10');
