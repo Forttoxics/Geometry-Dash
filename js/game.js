@@ -161,34 +161,33 @@ function initGame() {
     }
 
   obstacles.forEach((o) => {
-  if (o.type !== 'block') return;
-  const feet = cube.y + cube.size;
-  const prevFeet = feet - cube.vy;
-  const head = cube.y;
-  const right = cube.x + cube.size;
-  const left = cube.x;
+      if (o.type !== 'block') return;
+      const feet = cube.y + cube.size;
+      const prevFeet = feet - cube.vy;
+      const head = cube.y;
+      const prevHead = head - cube.vy;
+      const right = cube.x + cube.size - 4;
+      const left = cube.x + 4;
+      const overlapX = right > o.x + 4 && left < o.x + o.w - 4;
 
-  const overlapX = right - 4 > o.x + 4 && left + 4 < o.x + o.w - 4;
-  const overlapY = feet > o.y && head < o.y + o.h;
+      if (!overlapX) return;
 
-  if (!overlapX || !overlapY) return;
-
-  //aterriza encima
-  if (cube.vy >= 0 && prevFeet <= o.y + 4) {
-    cube.y = o.y - cube.size;
-    cube.vy = 0;
-    cube.onGround = true;
-  }
-  //rebota
-  else if (cube.vy < 0 && head >= o.y + o.h - 4) {
-    cube.y = o.y + o.h;
-    cube.vy = 0;
-  }
-  //muere
-  else {
-    die();
-  }
-});
+      // Aterriza encima
+      if (cube.vy >= 0 && prevFeet <= o.y + 2 && feet >= o.y) {
+        cube.y = o.y - cube.size;
+        cube.vy = 0;
+        cube.onGround = true;
+      }
+      // Golpea la base desde abajo → rebota
+      else if (cube.vy < 0 && prevHead >= o.y + o.h - 2 && head <= o.y + o.h) {
+        cube.y = o.y + o.h;
+        cube.vy = 2;
+      }
+      // Lateral → muere
+      else if (feet > o.y + 4 && head < o.y + o.h - 4) {
+        die();
+      }
+    
     if (frame % Math.max(50, 90 - Math.floor(score / 80)) === 0) {
       const types = ['spike', 'block'];
       const t = types[Math.floor(Math.random() * 2)];
