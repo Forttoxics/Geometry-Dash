@@ -620,7 +620,7 @@ function makePlayer(items, accent, numPrefix) {
         ${item.creator ? `<div style="font-size:12px;color:#888;margin-top:1px;">by ${item.creator}</div>` : ''}
       </div>
       <div class="play-btn" id="pb_${pid}" onclick="togglePlay('${pid}','${item.file}',this)" aria-label="Reproducir ${item.name}">
-        <img src="assets/imagenes/botones/play.svg" style="width:16px;height:16px;">
+        <img src="assets/imagenes/botones/play.svg" class="btn-icon" id="icon_${pid}">
       </div>
     </div>
     <div class="progress-wrap">
