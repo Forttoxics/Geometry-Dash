@@ -592,7 +592,7 @@ function makePlayer(items, accent, numPrefix) {
         ${item.creator ? `<div style="font-size:12px;color:#888;margin-top:1px;">by ${item.creator}</div>` : ''}
       </div>
       <div class="play-btn" id="pb_${pid}" onclick="togglePlay('${pid}','${item.file}',this)" aria-label="Reproducir ${item.name}">
-        <span style="font-size:13px;">▶</span>
+        <img src="assets/imagenes/botones/play.svg" style="width:16px;height:16px;">
       </div>
     </div>
     <div class="progress-wrap">
@@ -615,7 +615,7 @@ function togglePlay(pid, file, btn) {
   if (activeAudio && activeAudio !== audios[pid]) {
     activeAudio.pause();
     if (activeTrackEl) {
-      activeTrackEl.innerHTML = '<span style="font-size:13px;">▶</span>';
+      activeTrackEl.innerHTML = '<img src="assets/imagenes/botones/play.svg" style="width:16px;height:16px;">';
       activeTrackEl.classList.remove('playing');
     }
   }
@@ -634,7 +634,7 @@ function togglePlay(pid, file, btn) {
       if (dt) dt.textContent = fmtTime(audios[pid].duration);
     });
     audios[pid].addEventListener('ended', () => {
-      btn.innerHTML = '<span style="font-size:13px;">▶</span>';
+      btn.innerHTML = '<img src="assets/imagenes/botones/play.svg" style="width:16px;height:16px;">';
       btn.classList.remove('playing');
       activeAudio = null;
       activeTrackEl = null;
@@ -644,13 +644,13 @@ function togglePlay(pid, file, btn) {
   }
   if (audios[pid].paused) {
     audios[pid].play().catch(() => {});
-    btn.innerHTML = '<span style="font-size:13px;">⏸</span>';
+    btn.innerHTML = '<img src="assets/imagenes/botones/play.svg" style="width:16px;height:16px;">';
     btn.classList.add('playing');
     activeAudio = audios[pid];
     activeTrackEl = btn;
   } else {
     audios[pid].pause();
-    btn.innerHTML = '<span style="font-size:13px;">▶</span>';
+    btn.innerHTML = '<img src="assets/imagenes/botones/play.svg" style="width:16px;height:16px;">';
     btn.classList.remove('playing');
     activeAudio = null;
     activeTrackEl = null;
