@@ -390,6 +390,15 @@ function removeEntry(idx) {
   renderStreamerPanel();
 }
 
+async function reloadQueue() {
+  try {
+    const q = await Storage.get('gd2_queue');
+    if (q) queue = JSON.parse(q.value);
+    renderStreamerPanel();
+  } catch (e) {
+    console.warn('Error al recargar:', e);
+  }
+}
 function resetQueue() {
   if (!confirm('¿Resetear toda la cola?')) return;
   const sid = currentStreamer.id;
