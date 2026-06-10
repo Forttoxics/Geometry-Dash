@@ -1,10 +1,13 @@
+const db = firebase.database();
+
 const Storage = {
   async set(key, value) {
-    localStorage.setItem(key, value);
+    await db.ref('gd/' + key).set(value);
   },
   async get(key) {
-    const value = localStorage.getItem(key);
-    return value === null ? null : { value };
+    const snap = await db.ref('gd/' + key).get();
+    if (!snap.exists()) return null;
+    return { value: snap.val() };
   },
 };
 
@@ -18,10 +21,10 @@ async function save() {
     await Storage.set('gd2_currentBg', currentBg.toString());
     await Storage.set('gd2_currentGameBg', currentGameBg.toString());
   } catch (e) {
-    console.warn('Error al guardar datos:', e);
+    console.warn('Error al guardar:', e);
   }
-
 }
+
 async function load() {
   try {
     const s = await Storage.get('gd2_streamers');
@@ -35,8 +38,55 @@ async function load() {
     const sg = await Storage.get('gd2_songs');
     if (sg) songs = JSON.parse(sg.value);
     const bg = await Storage.get('gd2_currentBg');
-    if (bg) currentBg = parseInt(bg.value);
+    if (bg) { currentBg = parseInt(bg.value, 10); applyBg(currentBg); }
     const gbg = await Storage.get('gd2_currentGameBg');
-    if (gbg) currentGameBg = parseInt(gbg.value);
-  } catch(e) { console.warn('Error al cargar:', e); }
+    if (gbg) currentGameBg = parseInt(gbg.value, 10);
+  } catch (e) {
+    console.warn('Error al cargar:', e);
+  }
+
+  if (!streamers.length) {
+    streamers = [
+      { id: 'st1', name: 'stremer1', passHash: await sha256('1234'), color: '#9B59B6', avatar: 'https://via.placeholder.com/42?text=S1' },
+      { id: 'st2', name: 'Forttoxics', passHash: await sha256('5678'), color: '#00BFFF', avatar: 'https://via.placeholder.com/42?text=FX' },
+      { id: 'st3', name: 'stremer2', passHash: await sha256('pass3'), color: '#FF6B35', avatar: 'https://via.placeholder.com/42?text=S2' },
+      { id: 'st4', name: 'stremer3', passHash: await sha256('pass4'), color: '#39FF14', avatar: 'https://via.placeholder.com/42?text=S3' },
+      { id: 'st5', name: 'stremer4', passHash: await sha256('pass5'), color: '#FF3A3A', avatar: 'https://via.placeholder.com/42?text=S4' },
+      { id: 'st6', name: 'stremer5', passHash: await sha256('pass6'), color: '#FFD700', avatar: 'https://via.placeholder.com/42?text=S5' },
+      { id: 'st7', name: 'stremer6', passHash: await sha256('pass7'), color: '#FF69B4', avatar: 'https://via.placeholder.com/42?text=S6' },
+      { id: 'st8', name: 'stremer7', passHash: await sha256('pass8'), color: '#00FFCC', avatar: 'https://via.placeholder.com/42?text=S7' },
+      { id: 'st9', name: 'stremer8', passHash: await sha256('pass9'), color: '#FF8C00', avatar: 'https://via.placeholder.com/42?text=S8' },
+      { id: 'st10', name: 'stremer9', passHash: await sha256('pass10'), color: '#7B68EE', avatar: 'https://via.placeholder.com/42?text=S9' },
+    ];
+    queue = { st1: [], st2: [], st3: [], st4: [], st5: [], st6: [], st7: [], st8: [], st9: [], st10: [] };
+  }
+  }
+
+   if (!demons.length) {
+    demons = [
+      { name: 'Thinking Space 2', creator: 'cairoX', file: 'assets/demons/thinkingspaceII.mp3' },
+      { name: 'Flamewall', creator: 'Narwall', file: 'assets/demons/flamewall.mp3' },
+      { name: 'Amethyst', creator: 'iMist', file: 'assets/demons/amethyst.mp3' },
+      { name: 'Tidal Wave', creator: 'OniLink', file: 'assets/demons/tidalwave.mp3' },
+      { name: 'Orbit', creator: 'Mindcap', file: 'assets/demons/orbit.mp3' },
+    ];
+  }
+  }
+  if (!songs.length) {
+    songs = [
+      { name: 'Back on Track', file: 'assets/songs/backontrack.mp3' },
+      { name: 'Electroman Adventures', file: 'assets/songs/electromanadventures.mp3' },
+      { name: 'Electrodynamix', file: 'assets/songs/electrodynamix.mp3' },
+      { name: 'Fun Dance', file: 'assets/songs/fundance.mp3' },
+      { name: 'Jumper', file: 'assets/songs/jumper.mp3' },
+    ];
+  }
+  }
+
+  await save();
+  renderStreamerList();
+  renderDemonList();
+  renderSongsList();
+  renderBgSelector();
+  renderGameBgSelector();
 }
