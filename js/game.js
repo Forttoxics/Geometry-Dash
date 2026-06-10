@@ -234,8 +234,20 @@ function initGame() {
         if (right-pad > o.x+pad && left+pad < o.x+o.w-pad &&
             feet-pad > o.y+pad  && head+pad < o.y+o.h-pad) die();
 
-      } else if (o.type === 'ramp') {
-        if (rampHit(o)) die();
+     } else if (o.type === 'ramp') {
+        // La rampa funciona como suelo inclinado
+        const pad = 4;
+        const footX = cube.x + cube.size/2;
+        if (footX > o.x && footX < o.x + o.w) {
+          const fx = (footX - o.x) / o.w;
+          const surfaceY = o.y + o.h - fx * o.h;
+          const feet = cube.y + cube.size;
+          if (feet >= surfaceY - 4 && feet <= surfaceY + speed + 4 && cube.vy >= 0) {
+            cube.y = surfaceY - cube.size;
+            cube.vy = 0;
+            cube.onGround = true;
+          }
+        }
 
       } else if (o.type === 'block' || o.type === 'platform') {
         if (!overX) return;
