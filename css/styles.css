@@ -145,3 +145,18 @@ input.err{border-color:var(--r)!important;}
   .modal{max-width:96vw;padding:20px;}
   .dev-st-row{flex-direction:column;align-items:stretch;}
 }
+.btn-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.15s ease;
+}
+.play-btn:hover .btn-icon {
+  transform: scale(1.2);
+}
+.play-btn.playing .btn-icon {
+  animation: pulse-icon 1s ease-in-out infinite;
+}
+@keyframes pulse-icon {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.15); }
+}
