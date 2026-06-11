@@ -311,6 +311,11 @@ async function submitLevel() {
 }
 
 function renderStreamerPanel() {
+const lockBtn = document.getElementById('btn-lock');
+  if (lockBtn) {
+    lockBtn.textContent = currentStreamer.roomPass ? '🔒 Sala privada' : '🔓 Sala pública';
+    lockBtn.className = 'btn btn-sm ' + (currentStreamer.roomPass ? 'btn-r' : 'btn-ghost');
+  }
   document.getElementById('panel-name').textContent = currentStreamer.name;
   const sid = currentStreamer.id;
   const q = queue[sid] || [];
