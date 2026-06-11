@@ -33,6 +33,7 @@ async function sha256(msg) {
   return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
+// ─── LOAD ────────────────────────────────────────────────────────────────────
 async function load() {
   try {
     const s = await Storage.get('gd2_streamers');
@@ -46,10 +47,7 @@ async function load() {
     const sg = await Storage.get('gd2_songs');
     if (sg) songs = JSON.parse(sg.value);
     const bg = await Storage.get('gd2_currentBg');
-    if (bg) {
-      currentBg = parseInt(bg.value, 10);
-      applyBg(currentBg);
-    }
+    if (bg) { currentBg = parseInt(bg.value, 10); applyBg(currentBg); }
     const gbg = await Storage.get('gd2_currentGameBg');
     if (gbg) currentGameBg = parseInt(gbg.value, 10);
   } catch (e) {
@@ -58,37 +56,37 @@ async function load() {
 
   if (!streamers.length) {
     streamers = [
-      { id: 'st1', name: 'stremer1', passHash: await sha256('1234'), color: '#9B59B6', avatar: 'https://via.placeholder.com/42?text=S1' },
-      { id: 'st2', name: 'Forttoxics', passHash: await sha256('5678'), color: '#00BFFF', avatar: 'https://via.placeholder.com/42?text=FX' },
-      { id: 'st3', name: 'stremer2', passHash: await sha256('pass3'), color: '#FF6B35', avatar: 'https://via.placeholder.com/42?text=S2' },
-      { id: 'st4', name: 'stremer3', passHash: await sha256('pass4'), color: '#39FF14', avatar: 'https://via.placeholder.com/42?text=S3' },
-      { id: 'st5', name: 'stremer4', passHash: await sha256('pass5'), color: '#FF3A3A', avatar: 'https://via.placeholder.com/42?text=S4' },
-      { id: 'st6', name: 'stremer5', passHash: await sha256('pass6'), color: '#FFD700', avatar: 'https://via.placeholder.com/42?text=S5' },
-      { id: 'st7', name: 'stremer6', passHash: await sha256('pass7'), color: '#FF69B4', avatar: 'https://via.placeholder.com/42?text=S6' },
-      { id: 'st8', name: 'stremer7', passHash: await sha256('pass8'), color: '#00FFCC', avatar: 'https://via.placeholder.com/42?text=S7' },
-      { id: 'st9', name: 'stremer8', passHash: await sha256('pass9'), color: '#FF8C00', avatar: 'https://via.placeholder.com/42?text=S8' },
-      { id: 'st10', name: 'stremer9', passHash: await sha256('pass10'), color: '#7B68EE', avatar: 'https://via.placeholder.com/42?text=S9' },
+      { id: 'st1',  name: 'stremer1',   passHash: await sha256('1234'),  color: '#9B59B6', avatar: '' },
+      { id: 'st2',  name: 'Forttoxics', passHash: await sha256('5678'),  color: '#00BFFF', avatar: '' },
+      { id: 'st3',  name: 'stremer2',   passHash: await sha256('pass3'), color: '#FF6B35', avatar: '' },
+      { id: 'st4',  name: 'stremer3',   passHash: await sha256('pass4'), color: '#39FF14', avatar: '' },
+      { id: 'st5',  name: 'stremer4',   passHash: await sha256('pass5'), color: '#FF3A3A', avatar: '' },
+      { id: 'st6',  name: 'stremer5',   passHash: await sha256('pass6'), color: '#FFD700', avatar: '' },
+      { id: 'st7',  name: 'stremer6',   passHash: await sha256('pass7'), color: '#FF69B4', avatar: '' },
+      { id: 'st8',  name: 'stremer7',   passHash: await sha256('pass8'), color: '#00FFCC', avatar: '' },
+      { id: 'st9',  name: 'stremer8',   passHash: await sha256('pass9'), color: '#FF8C00', avatar: '' },
+      { id: 'st10', name: 'stremer9',   passHash: await sha256('pass10'),color: '#7B68EE', avatar: '' },
     ];
-    queue = { st1: [], st2: [], st3: [], st4: [], st5: [], st6: [], st7: [], st8: [], st9: [], st10: [] };
+    queue = { st1:[],st2:[],st3:[],st4:[],st5:[],st6:[],st7:[],st8:[],st9:[],st10:[] };
   }
 
   if (!demons.length) {
     demons = [
-      { name: 'Thinking Space 2', creator: 'cairoX', file: 'assets/demons/thinkingspaceII.mp3' },
-      { name: 'Flamewall', creator: 'Narwall', file: 'assets/demons/flamewall.mp3' },
-      { name: 'Amethyst', creator: 'iMist', file: 'assets/demons/amethyst.mp3' },
-      { name: 'Tidal Wave', creator: 'OniLink', file: 'assets/demons/tidalwave.mp3' },
-      { name: 'Orbit', creator: 'Mindcap', file: 'assets/demons/orbit.mp3' },
+      { name: 'Thinking Space 2', creator: 'cairoX',  file: 'assets/demons/thinkingspaceII.mp3' },
+      { name: 'Flamewall',        creator: 'Narwall',  file: 'assets/demons/flamewall.mp3'       },
+      { name: 'Amethyst',         creator: 'iMist',    file: 'assets/demons/amethyst.mp3'        },
+      { name: 'Tidal Wave',       creator: 'OniLink',  file: 'assets/demons/tidalwave.mp3'       },
+      { name: 'Orbit',            creator: 'Mindcap',  file: 'assets/demons/orbit.mp3'           },
     ];
   }
 
   if (!songs.length) {
     songs = [
-      { name: 'Back on Track', file: 'assets/songs/backontrack.mp3' },
-      { name: 'Electroman Adventures', file: 'assets/songs/electromanadventures.mp3' },
-      { name: 'Electrodynamix', file: 'assets/songs/electrodynamix.mp3' },
-      { name: 'Fun Dance', file: 'assets/songs/fundance.mp3' },
-      { name: 'Jumper', file: 'assets/songs/jumper.mp3' },
+      { name: 'Back on Track',         file: 'assets/songs/backontrack.mp3'          },
+      { name: 'Electroman Adventures',  file: 'assets/songs/electromanadventures.mp3' },
+      { name: 'Electrodynamix',         file: 'assets/songs/electrodynamix.mp3'       },
+      { name: 'Fun Dance',              file: 'assets/songs/fundance.mp3'             },
+      { name: 'Jumper',                 file: 'assets/songs/jumper.mp3'               },
     ];
   }
 
@@ -100,14 +98,15 @@ async function load() {
   renderGameBgSelector();
 }
 
+// ─── FONDO ───────────────────────────────────────────────────────────────────
 function applyBg(idx) {
   if (idx >= 0 && idx < BG_WALLPAPERS.length) {
     const bg = BG_WALLPAPERS[idx];
-    document.body.style.backgroundImage = `url('${bg.file}')`;
-    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundImage    = `url('${bg.file}')`;
+    document.body.style.backgroundSize     = 'cover';
     document.body.style.backgroundAttachment = 'fixed';
     document.body.style.backgroundPosition = 'center';
-    document.body.style.backgroundColor = '#0a0a14';
+    document.body.style.backgroundColor   = '#0a0a14';
     currentBg = idx;
     save();
   }
@@ -154,6 +153,7 @@ function selectGameBg(i) {
   initGame();
 }
 
+// ─── NAVEGACIÓN ──────────────────────────────────────────────────────────────
 function goTo(id) {
   document.querySelectorAll('.screen').forEach((s) => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -164,6 +164,7 @@ function goTo(id) {
   }
 }
 
+// ─── LISTA DE STREAMERS ───────────────────────────────────────────────────────
 function renderStreamerList() {
   const el = document.getElementById('streamer-list');
   el.innerHTML = '';
@@ -176,9 +177,13 @@ function renderStreamerList() {
       : `<span style="font-size:18px;font-weight:700;">${st.name[0].toUpperCase()}</span>`;
     d.innerHTML = `
       <div class="s-avatar" style="background:${st.color}">${avatarHtml}</div>
-      <div><div style="font-size:16px;font-weight:600;">${st.name}</div><div style="font-size:13px;color:#888;">${q} nivel${q !== 1 ? 'es' : ''} en cola</div></div>
-      <div class="s-badge" style="${st.roomPass ? 'background:rgba(255,58,58,0.12);color:var(--r);border-color:rgba(255,58,58,0.3);' : ''}">${st.roomPass ? '🔒 Privada' : q > 0 ? 'Activo' : 'Libre'}</div>
-    `;
+      <div>
+        <div style="font-size:16px;font-weight:600;">${st.name}</div>
+        <div style="font-size:13px;color:#888;">${q} nivel${q !== 1 ? 'es' : ''} en cola</div>
+      </div>
+      <div class="s-badge" style="${st.roomPass ? 'background:rgba(255,58,58,0.12);color:var(--r);border-color:rgba(255,58,58,0.3);' : ''}">
+        ${st.roomPass ? '🔒 Privada' : q > 0 ? 'Activo' : 'Libre'}
+      </div>`;
     d.onclick = () => selectStreamer(st);
     el.appendChild(d);
   });
@@ -196,20 +201,19 @@ function selectStreamer(st) {
 
 function showRoomLogin(st) {
   document.getElementById('login-title').textContent = `🔒 Sala privada — ${st.name}`;
-  document.getElementById('login-alert').innerHTML = '<div class="alert" style="background:rgba(255,215,0,0.07);border:1px solid rgba(255,215,0,0.2);color:#ccc;font-size:13px;margin-bottom:10px;">El streamer ha puesto esta sala en modo privado. Pide la contraseña en su chat.</div>';
+  document.getElementById('login-alert').innerHTML =
+    '<div class="alert" style="background:rgba(255,215,0,0.07);border:1px solid rgba(255,215,0,0.2);color:#ccc;font-size:13px;margin-bottom:10px;">El streamer ha puesto esta sala en modo privado. Pide la contraseña en su chat.</div>';
   document.getElementById('login-pass').value = '';
   loginTarget = 'room';
   document.getElementById('modal-login').classList.add('open');
 }
 
+// ─── MODOS DE ENTRADA ────────────────────────────────────────────────────────
 function enterUserMode() {
   document.getElementById('user-alert').innerHTML = '';
-  ['f-lid', 'f-gd', 'f-soc', 'f-ln', 'f-vid', 'f-note'].forEach((id) => {
+  ['f-lid','f-gd','f-soc','f-ln','f-vid','f-note'].forEach((id) => {
     const e = document.getElementById(id);
-    if (e) {
-      e.value = '';
-      e.classList.remove('err');
-    }
+    if (e) { e.value = ''; e.classList.remove('err'); }
   });
   goTo('screen-user');
   setTimeout(initGame, 100);
@@ -231,9 +235,11 @@ function showDevLogin() {
   document.getElementById('modal-login').classList.add('open');
 }
 
+// ─── LOGIN ────────────────────────────────────────────────────────────────────
 async function checkLogin() {
-  const pass = document.getElementById('login-pass').value;
-  const h = await sha256(pass);
+  const passVal = document.getElementById('login-pass').value;
+  const h = await sha256(passVal);
+
   if (loginTarget === 'dev') {
     if (h === DEV_HASH) {
       closeLoginModal();
@@ -242,20 +248,24 @@ async function checkLogin() {
     } else {
       document.getElementById('login-alert').innerHTML = '<div class="alert alert-r">Contraseña incorrecta</div>';
     }
+
   } else if (loginTarget === 'room') {
-    if (document.getElementById('login-pass').value === currentStreamer.roomPass) {
+    if (passVal === currentStreamer.roomPass) {
       closeLoginModal();
       document.getElementById('mode-st-name').textContent = currentStreamer.name;
       goTo('screen-mode');
     } else {
       document.getElementById('login-alert').innerHTML = '<div class="alert alert-r">Contraseña incorrecta</div>';
     }
-  } else if (h === currentStreamer.passHash) {
-    closeLoginModal();
-    goTo('screen-streamer');
-    renderStreamerPanel();
-  } else {
-    document.getElementById('login-alert').innerHTML = '<div class="alert alert-r">Contraseña incorrecta</div>';
+
+  } else if (loginTarget === 'streamer') {
+    if (h === currentStreamer.passHash) {
+      closeLoginModal();
+      goTo('screen-streamer');
+      renderStreamerPanel();
+    } else {
+      document.getElementById('login-alert').innerHTML = '<div class="alert alert-r">Contraseña incorrecta</div>';
+    }
   }
 }
 
@@ -265,23 +275,26 @@ function closeLoginModal(e) {
   }
 }
 
+// ─── ÍCONO DE USUARIO ────────────────────────────────────────────────────────
 function selectIcon(i) {
   currentIcon = i;
   document.querySelectorAll('.icon-opt').forEach((el, idx) => el.classList.toggle('selected', idx === i));
 }
 
+// ─── ENVIAR NIVEL ─────────────────────────────────────────────────────────────
 async function submitLevel() {
-  const lid = document.getElementById('f-lid').value.trim();
-  const gd = document.getElementById('f-gd').value.trim();
-  const soc = document.getElementById('f-soc').value.trim();
-  const ln = document.getElementById('f-ln').value.trim();
-  const vid = document.getElementById('f-vid').value.trim();
+  const lid  = document.getElementById('f-lid').value.trim();
+  const gd   = document.getElementById('f-gd').value.trim();
+  const soc  = document.getElementById('f-soc').value.trim();
+  const ln   = document.getElementById('f-ln').value.trim();
+  const vid  = document.getElementById('f-vid').value.trim();
   const note = document.getElementById('f-note').value.trim();
+
   const errs = [];
   if (!lid) errs.push('f-lid');
-  if (!gd) errs.push('f-gd');
+  if (!gd)  errs.push('f-gd');
   if (!soc) errs.push('f-soc');
-  ['f-lid', 'f-gd', 'f-soc'].forEach((id) => document.getElementById(id).classList.remove('err'));
+  ['f-lid','f-gd','f-soc'].forEach((id) => document.getElementById(id).classList.remove('err'));
   errs.forEach((id) => document.getElementById(id).classList.add('err'));
   if (errs.length) {
     document.getElementById('user-alert').innerHTML = '<div class="alert alert-r">Completa los campos obligatorios</div>';
@@ -298,36 +311,25 @@ async function submitLevel() {
     return;
   }
   if (!queue[sid]) queue[sid] = [];
-  queue[sid].push({
-    levelId: lid,
-    gdUser: gd,
-    social: soc,
-    levelName: ln,
-    video: vid,
-    note,
-    rated: false,
-    icon: currentIcon,
-    ts: Date.now(),
-    userId: 'user_' + Date.now(),
-  });
+  queue[sid].push({ levelId:lid, gdUser:gd, social:soc, levelName:ln, video:vid, note, rated:false, icon:currentIcon, ts:Date.now() });
   sentLevels[sid][lid] = true;
   await save();
   document.getElementById('user-alert').innerHTML = '<div class="alert alert-g">✓ ¡Nivel enviado! Estás en la cola 🎮</div>';
-  ['f-lid', 'f-gd', 'f-soc', 'f-ln', 'f-vid', 'f-note'].forEach((id) => {
-    const e = document.getElementById(id);
-    if (e) e.value = '';
+  ['f-lid','f-gd','f-soc','f-ln','f-vid','f-note'].forEach((id) => {
+    const e = document.getElementById(id); if (e) e.value = '';
   });
 }
 
+// ─── PANEL STREAMER ───────────────────────────────────────────────────────────
 function renderStreamerPanel() {
-const lockBtn = document.getElementById('btn-lock');
+  const lockBtn = document.getElementById('btn-lock');
   if (lockBtn) {
     lockBtn.textContent = currentStreamer.roomPass ? '🔒 Sala privada' : '🔓 Sala pública';
-    lockBtn.className = 'btn btn-sm ' + (currentStreamer.roomPass ? 'btn-r' : 'btn-ghost');
+    lockBtn.className   = 'btn btn-sm ' + (currentStreamer.roomPass ? 'btn-r' : 'btn-ghost');
   }
   document.getElementById('panel-name').textContent = currentStreamer.name;
   const sid = currentStreamer.id;
-  const q = queue[sid] || [];
+  const q   = queue[sid] || [];
   document.getElementById('q-count').textContent = q.length;
   const el = document.getElementById('queue-list');
   if (!q.length) {
@@ -335,15 +337,15 @@ const lockBtn = document.getElementById('btn-lock');
     return;
   }
   el.innerHTML = '';
+  const iconSvgs = [
+    `<svg width="22" height="22" viewBox="0 0 38 38"><rect x="4" y="4" width="30" height="30" rx="4" fill="#FFD700"/><circle cx="15" cy="17" r="3" fill="#000"/></svg>`,
+    `<svg width="22" height="22" viewBox="0 0 38 38"><rect x="4" y="4" width="30" height="30" rx="4" fill="#00BFFF"/><polygon points="19,8 30,30 8,30" fill="rgba(0,0,0,0.25)"/></svg>`,
+    `<svg width="22" height="22" viewBox="0 0 38 38"><rect x="4" y="4" width="30" height="30" rx="4" fill="#9B59B6"/><circle cx="19" cy="19" r="6" fill="rgba(255,255,255,0.3)"/></svg>`,
+    `<svg width="22" height="22" viewBox="0 0 38 38"><rect x="4" y="4" width="30" height="30" rx="4" fill="#39FF14"/><polygon points="19,6 34,32 4,32" fill="rgba(0,0,0,0.18)"/></svg>`,
+  ];
   q.forEach((entry, i) => {
     const row = document.createElement('div');
     row.className = 'queue-row';
-    const iconSvgs = [
-      `<svg width="22" height="22" viewBox="0 0 38 38"><rect x="4" y="4" width="30" height="30" rx="4" fill="#FFD700"/><circle cx="15" cy="17" r="3" fill="#000"/></svg>`,
-      `<svg width="22" height="22" viewBox="0 0 38 38"><rect x="4" y="4" width="30" height="30" rx="4" fill="#00BFFF"/><polygon points="19,8 30,30 8,30" fill="rgba(0,0,0,0.25)"/></svg>`,
-      `<svg width="22" height="22" viewBox="0 0 38 38"><rect x="4" y="4" width="30" height="30" rx="4" fill="#9B59B6"/><circle cx="19" cy="19" r="6" fill="rgba(255,255,255,0.3)"/></svg>`,
-      `<svg width="22" height="22" viewBox="0 0 38 38"><rect x="4" y="4" width="30" height="30" rx="4" fill="#39FF14"/><polygon points="19,6 34,32 4,32" fill="rgba(0,0,0,0.18)"/></svg>`,
-    ];
     row.innerHTML = `
       <div class="q-num">${i + 1}</div>
       <div style="flex-shrink:0;">${iconSvgs[entry.icon || 0]}</div>
@@ -362,8 +364,7 @@ const lockBtn = document.getElementById('btn-lock');
 
 function toggleRate(idx, e) {
   e.stopPropagation();
-  const sid = currentStreamer.id;
-  queue[sid][idx].rated = !queue[sid][idx].rated;
+  queue[currentStreamer.id][idx].rated = !queue[currentStreamer.id][idx].rated;
   save();
   renderStreamerPanel();
 }
@@ -378,32 +379,31 @@ async function banFromQueue(gdUser, idx, e) {
 }
 
 function openLevelModal(idx) {
-  const sid = currentStreamer.id;
-  const entry = queue[sid][idx];
+  const entry = queue[currentStreamer.id][idx];
   const fields = [
-    ['ID del nivel', entry.levelId],
-    ['Usuario GD', entry.gdUser],
+    ['ID del nivel',     entry.levelId],
+    ['Usuario GD',       entry.gdUser],
     ['Twitch/TikTok/YT', entry.social],
     ['Nombre del nivel', entry.levelName || '—'],
-    ['Nota', entry.note || '—'],
-    ['Video', entry.video || '—'],
+    ['Nota',             entry.note     || '—'],
+    ['Video',            entry.video    || '—'],
   ];
-  const filled = [entry.levelId, entry.gdUser, entry.social, entry.levelName, entry.note, entry.video].filter(Boolean).length;
-  const dots = Array.from({ length: 6 }, (_, i) =>
-    `<span style="width:8px;height:8px;border-radius:50%;background:${i < filled ? 'var(--y)' : 'rgba(255,255,255,.12)'};display:inline-block;margin-right:4px;"></span>`
+  const filled = [entry.levelId,entry.gdUser,entry.social,entry.levelName,entry.note,entry.video].filter(Boolean).length;
+  const dots = Array.from({length:6},(_,i)=>
+    `<span style="width:8px;height:8px;border-radius:50%;background:${i<filled?'var(--y)':'rgba(255,255,255,.12)'};display:inline-block;margin-right:4px;"></span>`
   ).join('');
   let html = `<div class="modal-hdr"><div class="modal-title">Nivel #${entry.levelId}</div><button class="modal-close" onclick="closeModal()">✕</button></div>
   <div style="margin-bottom:12px;font-size:13px;color:#888;">Datos completados: <span style="color:var(--g);font-weight:700;">${filled}</span>/6 ${dots}</div>`;
-  fields.forEach(([l, v]) => {
+  fields.forEach(([l,v]) => {
     html += `<div class="info-row"><span class="info-lbl">${l}</span><span class="info-val">${v}</span></div>`;
   });
-  html += `<div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;"><button class="btn btn-r btn-sm" onclick="removeEntry(${idx})" style="flex:1;">Eliminar de la cola</button></div>`;
+  html += `<div style="display:flex;gap:8px;margin-top:16px;"><button class="btn btn-r btn-sm" onclick="removeEntry(${idx})" style="flex:1;">Eliminar de la cola</button></div>`;
   document.getElementById('modal-content').innerHTML = html;
   document.getElementById('modal-overlay').classList.add('open');
 }
 
 function removeEntryInternal(idx) {
-  const sid = currentStreamer.id;
+  const sid   = currentStreamer.id;
   const entry = queue[sid][idx];
   if (sentLevels[sid]) delete sentLevels[sid][entry.levelId];
   queue[sid].splice(idx, 1);
@@ -425,6 +425,7 @@ async function reloadQueue() {
     console.warn('Error al recargar:', e);
   }
 }
+
 function resetQueue() {
   if (!confirm('¿Resetear toda la cola?')) return;
   const sid = currentStreamer.id;
@@ -433,22 +434,19 @@ function resetQueue() {
   save();
   renderStreamerPanel();
 }
+
 async function toggleRoomLock() {
   const btn = document.getElementById('btn-lock');
   if (currentStreamer.roomPass) {
-    // desbloquear
     currentStreamer.roomPass = '';
     btn.textContent = '🔓 Sala pública';
-    btn.classList.remove('btn-r');
-    btn.classList.add('btn-ghost');
+    btn.className   = 'btn btn-sm btn-ghost';
   } else {
-    // pedir contraseña temporal
-    const pass = prompt('Escribe la contraseña temporal para tu sala (la compartes en tu chat):');
+    const pass = prompt('Escribe la contraseña temporal para tu sala:');
     if (!pass || !pass.trim()) return;
     currentStreamer.roomPass = pass.trim();
     btn.textContent = '🔒 Sala privada';
-    btn.classList.remove('btn-ghost');
-    btn.classList.add('btn-r');
+    btn.className   = 'btn btn-sm btn-r';
   }
   await save();
   renderStreamerList();
@@ -460,6 +458,7 @@ function closeModal(e) {
   }
 }
 
+// ─── PANEL DEV ────────────────────────────────────────────────────────────────
 function renderDevPanel() {
   const el = document.getElementById('dev-st-list');
   el.innerHTML = '';
@@ -470,7 +469,9 @@ function renderDevPanel() {
       <div style="flex:1;min-width:0;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
           <div class="s-avatar" style="background:${st.color};width:36px;height:36px;border-radius:7px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;">
-            ${st.avatar ? `<img src="${st.avatar}" style="width:100%;height:100%;object-fit:cover;">` : `<span style="font-size:15px;font-weight:700;">${st.name[0].toUpperCase()}</span>`}
+            ${st.avatar
+              ? `<img src="${st.avatar}" style="width:100%;height:100%;object-fit:cover;">`
+              : `<span style="font-size:15px;font-weight:700;">${st.name[0].toUpperCase()}</span>`}
           </div>
           <span style="color:var(--y);font-weight:700;">${st.name}</span>
         </div>
@@ -496,7 +497,8 @@ function renderDevPanel() {
   banned.forEach((u, i) => {
     const d = document.createElement('div');
     d.className = 'banned-row';
-    d.innerHTML = `<span style="font-family:'Share Tech Mono',monospace;font-size:14px;color:var(--r);">${u}</span><button class="btn btn-ghost btn-sm" onclick="unban(${i})">Desbanear</button>`;
+    d.innerHTML = `<span style="font-family:'Share Tech Mono',monospace;font-size:14px;color:var(--r);">${u}</span>
+                   <button class="btn btn-ghost btn-sm" onclick="unban(${i})">Desbanear</button>`;
     bl.appendChild(d);
   });
 
@@ -511,7 +513,7 @@ function renderDevPanel() {
     d.style.marginBottom = '12px';
     d.innerHTML = `<div style="font-size:14px;margin-bottom:4px;"><span style="color:var(--y);">${st.name}</span> · <span style="color:#888;">${q.length} en cola</span></div>`;
     q.forEach((e, i) => {
-      d.innerHTML += `<div style="font-size:13px;color:#aaa;padding:4px 10px;background:#0d0d1a;border-radius:4px;margin-bottom:3px;">${i + 1}. #${e.levelId} — ${e.gdUser}</div>`;
+      d.innerHTML += `<div style="font-size:13px;color:#aaa;padding:4px 10px;background:#0d0d1a;border-radius:4px;margin-bottom:3px;">${i+1}. #${e.levelId} — ${e.gdUser}</div>`;
     });
     dq.appendChild(d);
   });
@@ -519,11 +521,8 @@ function renderDevPanel() {
 
 async function changeStreamerPass(stId) {
   const input = document.getElementById('pass-' + stId);
-  const pass = input.value.trim();
-  if (!pass) {
-    alert('Escribe una contraseña');
-    return;
-  }
+  const pass  = input.value.trim();
+  if (!pass) { alert('Escribe una contraseña'); return; }
   const st = streamers.find((s) => s.id === stId);
   if (!st) return;
   st.passHash = await sha256(pass);
@@ -531,26 +530,25 @@ async function changeStreamerPass(stId) {
   await save();
   alert(`Contraseña de "${st.name}" actualizada`);
 }
+
 async function changeAvatar(stId) {
   const input = document.getElementById('avatar-' + stId);
-  const url = input.value.trim();
-  const st = streamers.find((s) => s.id === stId);
+  const url   = input.value.trim();
+  const st    = streamers.find((s) => s.id === stId);
   if (!st) return;
   st.avatar = url;
   await save();
   renderStreamerList();
   renderDevPanel();
 }
+
 async function addStreamer() {
-  if (streamers.length >= 10) {
-    alert('Máximo 10');
-    return;
-  }
+  if (streamers.length >= 10) { alert('Máximo 10'); return; }
   const name = document.getElementById('new-st').value.trim();
   const pass = document.getElementById('new-st-pass').value.trim();
   if (!name || !pass) return;
-  const colors = ['#9B59B6', '#00BFFF', '#FF6B35', '#39FF14', '#FF3A3A', '#FFD700', '#FF69B4', '#00FFCC', '#FF8C00', '#7B68EE'];
-  const id = 'st_' + Date.now();
+  const colors = ['#9B59B6','#00BFFF','#FF6B35','#39FF14','#FF3A3A','#FFD700','#FF69B4','#00FFCC','#FF8C00','#7B68EE'];
+  const id       = 'st_' + Date.now();
   const passHash = await sha256(pass);
   streamers.push({ id, name, passHash, color: colors[streamers.length % colors.length], avatar: '' });
   queue[id] = [];
@@ -593,16 +591,17 @@ function unban(i) {
   renderDevPanel();
 }
 
+// ─── EDITORES DEMON / SONGS ───────────────────────────────────────────────────
 function renderDemonEditor() {
   const el = document.getElementById('demon-editor');
   el.innerHTML = '';
   demons.forEach((d, i) => {
     const row = document.createElement('div');
     row.style.cssText = 'display:flex;gap:6px;margin-bottom:6px;align-items:center;flex-wrap:wrap;';
-    row.innerHTML = `<span style="color:var(--y);font-family:Share Tech Mono,monospace;font-size:14px;min-width:20px;">${i + 1}</span>
-    <input type="text" placeholder="Nombre" value="${d.name}" style="flex:1;min-width:150px;" onchange="demons[${i}].name=this.value;save();renderDemonList();">
-    <input type="text" placeholder="Creador" value="${d.creator}" style="flex:1;min-width:100px;" onchange="demons[${i}].creator=this.value;save();renderDemonList();">
-    <input type="text" placeholder="assets/demons/archivo.mp3" value="${d.file}" style="flex:1.5;min-width:150px;" onchange="demons[${i}].file=this.value;save();renderDemonList();">`;
+    row.innerHTML = `<span style="color:var(--y);font-family:Share Tech Mono,monospace;font-size:14px;min-width:20px;">${i+1}</span>
+      <input type="text" placeholder="Nombre" value="${d.name}" style="flex:1;min-width:150px;" onchange="demons[${i}].name=this.value;save();renderDemonList();">
+      <input type="text" placeholder="Creador" value="${d.creator}" style="flex:1;min-width:100px;" onchange="demons[${i}].creator=this.value;save();renderDemonList();">
+      <input type="text" placeholder="assets/demons/archivo.mp3" value="${d.file}" style="flex:1.5;min-width:150px;" onchange="demons[${i}].file=this.value;save();renderDemonList();">`;
     el.appendChild(row);
   });
 }
@@ -613,20 +612,18 @@ function renderSongsEditor() {
   songs.forEach((s, i) => {
     const row = document.createElement('div');
     row.style.cssText = 'display:flex;gap:6px;margin-bottom:6px;align-items:center;flex-wrap:wrap;';
-    row.innerHTML = `<span style="color:var(--p);font-family:Share Tech Mono,monospace;font-size:14px;min-width:20px;">${i + 1}</span>
-    <input type="text" placeholder="Nombre" value="${s.name}" style="flex:1;min-width:150px;" onchange="songs[${i}].name=this.value;save();renderSongsList();">
-    <input type="text" placeholder="assets/songs/archivo.mp3" value="${s.file}" style="flex:1.5;min-width:150px;" onchange="songs[${i}].file=this.value;save();renderSongsList();">
-    <button class="btn btn-ghost btn-sm" onclick="removeSong(${i})">✕</button>`;
+    row.innerHTML = `<span style="color:var(--p);font-family:Share Tech Mono,monospace;font-size:14px;min-width:20px;">${i+1}</span>
+      <input type="text" placeholder="Nombre" value="${s.name}" style="flex:1;min-width:150px;" onchange="songs[${i}].name=this.value;save();renderSongsList();">
+      <input type="text" placeholder="assets/songs/archivo.mp3" value="${s.file}" style="flex:1.5;min-width:150px;" onchange="songs[${i}].file=this.value;save();renderSongsList();">
+      <button class="btn btn-ghost btn-sm" onclick="removeSong(${i})">✕</button>`;
     el.appendChild(row);
   });
   const add = document.createElement('button');
   add.className = 'btn btn-ghost btn-sm';
   add.textContent = '+ Añadir canción';
   add.onclick = () => {
-    songs.push({ name: 'Nueva canción', file: 'assets/songs/archivo.mp3' });
-    save();
-    renderSongsEditor();
-    renderSongsList();
+    songs.push({ name:'Nueva canción', file:'assets/songs/archivo.mp3' });
+    save(); renderSongsEditor(); renderSongsList();
   };
   el.appendChild(add);
 }
@@ -638,9 +635,10 @@ function removeSong(i) {
   renderSongsList();
 }
 
+// ─── REPRODUCTOR DE AUDIO ─────────────────────────────────────────────────────
 function fmtTime(s) {
   s = Math.round(s);
-  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
 }
 
 function makePlayer(items, accent, numPrefix) {
@@ -650,13 +648,13 @@ function makePlayer(items, accent, numPrefix) {
     const div = document.createElement('div');
     div.className = 'audio-player';
     div.innerHTML = `<div class="audio-row">
-      <span class="track-num" style="color:${accent};">${String(i + 1).padStart(2, '0')}</span>
+      <span class="track-num" style="color:${accent};">${String(i+1).padStart(2,'0')}</span>
       <div class="track-info">
         <div class="track-name">${item.name}</div>
         ${item.creator ? `<div style="font-size:12px;color:#888;margin-top:1px;">by ${item.creator}</div>` : ''}
       </div>
       <div class="play-btn" id="pb_${pid}" onclick="togglePlay('${pid}','${item.file}',this)" aria-label="Reproducir ${item.name}">
-        <img src="assets/imagenes/botones/play.svg" class="btn-icon" id="icon_${pid}">
+        <span style="font-size:15px;">▶</span>
       </div>
     </div>
     <div class="progress-wrap">
@@ -679,7 +677,7 @@ function togglePlay(pid, file, btn) {
   if (activeAudio && activeAudio !== audios[pid]) {
     activeAudio.pause();
     if (activeTrackEl) {
-      activeTrackEl.innerHTML = '<img src="assets/imagenes/botones/play.svg" style="width:16px;height:16px;">';
+      activeTrackEl.innerHTML = '<span style="font-size:15px;">▶</span>';
       activeTrackEl.classList.remove('playing');
     }
   }
@@ -688,8 +686,8 @@ function togglePlay(pid, file, btn) {
     audios[pid].addEventListener('timeupdate', () => {
       const a = audios[pid];
       const pct = a.duration ? (a.currentTime / a.duration) * 100 : 0;
-      const pf = document.getElementById('pf_' + pid);
-      const ct = document.getElementById('ct_' + pid);
+      const pf  = document.getElementById('pf_' + pid);
+      const ct  = document.getElementById('ct_' + pid);
       if (pf) pf.style.width = pct + '%';
       if (ct) ct.textContent = fmtTime(a.currentTime);
     });
@@ -698,36 +696,33 @@ function togglePlay(pid, file, btn) {
       if (dt) dt.textContent = fmtTime(audios[pid].duration);
     });
     audios[pid].addEventListener('ended', () => {
-      btn.innerHTML = '<img src="assets/imagenes/botones/play.svg" style="width:16px;height:16px;">';
+      btn.innerHTML = '<span style="font-size:15px;">▶</span>';
       btn.classList.remove('playing');
-      activeAudio = null;
-      activeTrackEl = null;
+      activeAudio = null; activeTrackEl = null;
       const pf = document.getElementById('pf_' + pid);
       if (pf) pf.style.width = '0%';
     });
   }
   if (audios[pid].paused) {
     audios[pid].play().catch(() => {});
-    btn.innerHTML = '<img src="assets/imagenes/botones/pause.svg" style="width:16px;height:16px;">';
+    btn.innerHTML = '<span style="font-size:15px;">⏸</span>';
     btn.classList.add('playing');
     activeAudio = audios[pid];
     activeTrackEl = btn;
   } else {
     audios[pid].pause();
-    btn.innerHTML = '<img src="assets/imagenes/botones/play.svg" style="width:16px;height:16px;">';
+    btn.innerHTML = '<span style="font-size:15px;">▶</span>';
     btn.classList.remove('playing');
-    activeAudio = null;
-    activeTrackEl = null;
+    activeAudio = null; activeTrackEl = null;
   }
 }
 
 function seekAudio(e, pid) {
   const a = audios[pid];
   if (!a || !a.duration) return;
-  const bar = e.currentTarget;
+  const bar  = e.currentTarget;
   const rect = bar.getBoundingClientRect();
-  const pct = (e.clientX - rect.left) / rect.width;
-  a.currentTime = pct * a.duration;
+  a.currentTime = ((e.clientX - rect.left) / rect.width) * a.duration;
 }
 
 function renderDemonList() {
