@@ -178,6 +178,7 @@ function renderStreamerList() {
       <div class="s-avatar" style="background:${st.color}">${avatarHtml}</div>
       <div><div style="font-size:16px;font-weight:600;">${st.name}</div><div style="font-size:13px;color:#888;">${q} nivel${q !== 1 ? 'es' : ''} en cola</div></div>
       <div class="s-badge" style="${st.roomPass ? 'background:rgba(255,58,58,0.12);color:var(--r);border-color:rgba(255,58,58,0.3);' : ''}">${st.roomPass ? '🔒 Privada' : q > 0 ? 'Activo' : 'Libre'}</div>
+    `;
     d.onclick = () => selectStreamer(st);
     el.appendChild(d);
   });
@@ -238,6 +239,14 @@ async function checkLogin() {
       closeLoginModal();
       goTo('screen-dev');
       renderDevPanel();
+    } else {
+      document.getElementById('login-alert').innerHTML = '<div class="alert alert-r">Contraseña incorrecta</div>';
+    }
+  } else if (loginTarget === 'room') {
+    if (document.getElementById('login-pass').value === currentStreamer.roomPass) {
+      closeLoginModal();
+      document.getElementById('mode-st-name').textContent = currentStreamer.name;
+      goTo('screen-mode');
     } else {
       document.getElementById('login-alert').innerHTML = '<div class="alert alert-r">Contraseña incorrecta</div>';
     }
@@ -415,16 +424,6 @@ async function reloadQueue() {
   } catch (e) {
     console.warn('Error al recargar:', e);
   }
-  async function reloadQueue() {
-  try {
-    const q = await Storage.get('gd2_queue');
-    if (q) queue = JSON.parse(q.value);
-    renderStreamerPanel();
-  } catch (e) {
-    console.warn('Error al recargar:', e);
-  }
-}
-  
 }
 function resetQueue() {
   if (!confirm('¿Resetear toda la cola?')) return;
@@ -709,7 +708,7 @@ function togglePlay(pid, file, btn) {
   }
   if (audios[pid].paused) {
     audios[pid].play().catch(() => {});
-    btn.innerHTML = '<img src="assets/imagenes/botones/play.svg" style="width:16px;height:16px;">';
+    btn.innerHTML = '<img src="assets/imagenes/botones/pause.svg" style="width:16px;height:16px;">';
     btn.classList.add('playing');
     activeAudio = audios[pid];
     activeTrackEl = btn;
