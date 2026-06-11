@@ -177,7 +177,7 @@ function renderStreamerList() {
     d.innerHTML = `
       <div class="s-avatar" style="background:${st.color}">${avatarHtml}</div>
       <div><div style="font-size:16px;font-weight:600;">${st.name}</div><div style="font-size:13px;color:#888;">${q} nivel${q !== 1 ? 'es' : ''} en cola</div></div>
-      <div class="s-badge">${q > 0 ? 'Activo' : 'Libre'}</div>`;
+      <div class="s-badge" style="${st.roomPass ? 'background:rgba(255,58,58,0.12);color:var(--r);border-color:rgba(255,58,58,0.3);' : ''}">${st.roomPass ? '🔒 Privada' : q > 0 ? 'Activo' : 'Libre'}</div>
     d.onclick = () => selectStreamer(st);
     el.appendChild(d);
   });
@@ -185,8 +185,20 @@ function renderStreamerList() {
 
 function selectStreamer(st) {
   currentStreamer = st;
-  document.getElementById('mode-st-name').textContent = st.name;
-  goTo('screen-mode');
+  if (st.roomPass) {
+    showRoomLogin(st);
+  } else {
+    document.getElementById('mode-st-name').textContent = st.name;
+    goTo('screen-mode');
+  }
+}
+
+function showRoomLogin(st) {
+  document.getElementById('login-title').textContent = `🔒 Sala privada — ${st.name}`;
+  document.getElementById('login-alert').innerHTML = '<div class="alert" style="background:rgba(255,215,0,0.07);border:1px solid rgba(255,215,0,0.2);color:#ccc;font-size:13px;margin-bottom:10px;">El streamer ha puesto esta sala en modo privado. Pide la contraseña en su chat.</div>';
+  document.getElementById('login-pass').value = '';
+  loginTarget = 'room';
+  document.getElementById('modal-login').classList.add('open');
 }
 
 function enterUserMode() {
