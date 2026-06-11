@@ -429,6 +429,26 @@ function resetQueue() {
   save();
   renderStreamerPanel();
 }
+async function toggleRoomLock() {
+  const btn = document.getElementById('btn-lock');
+  if (currentStreamer.roomPass) {
+    // desbloquear
+    currentStreamer.roomPass = '';
+    btn.textContent = '🔓 Sala pública';
+    btn.classList.remove('btn-r');
+    btn.classList.add('btn-ghost');
+  } else {
+    // pedir contraseña temporal
+    const pass = prompt('Escribe la contraseña temporal para tu sala (la compartes en tu chat):');
+    if (!pass || !pass.trim()) return;
+    currentStreamer.roomPass = pass.trim();
+    btn.textContent = '🔒 Sala privada';
+    btn.classList.remove('btn-ghost');
+    btn.classList.add('btn-r');
+  }
+  await save();
+  renderStreamerList();
+}
 
 function closeModal(e) {
   if (!e || e.target === document.getElementById('modal-overlay')) {
